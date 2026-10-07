@@ -1,4 +1,4 @@
 # NyaberaWorks backend - runtime dependencies (versions pinned on purpose)
 fastapi==0.142.2
 uvicorn[standard]==0.54.0
-pydantic-settings==2.15.0
+pydantic-settings==2.15.0 
