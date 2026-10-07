@@ -30,6 +30,13 @@ class Settings(BaseSettings):
     # correct production setting because the site and API share one domain.
     cors_allowed_origins: str = ""
     log_level: Literal["DEBUG", "INFO", "WARNING", "ERROR", "CRITICAL"] = "INFO"
+    # PostgreSQL connection string. No default on purpose: it holds a password,
+    # so it comes from backend/.env or the server environment.
+    database_url: str = ""
+    # Long random value used to hash visitor IP addresses (and, later, sign tokens).
+    app_secret_key: str = ""
+    # Public form spam limit: submissions allowed per visitor per hour.
+    lead_rate_limit_per_hour: int = 5
 
     @property
     def cors_origins(self) -> list[str]:
@@ -45,6 +52,10 @@ class Settings(BaseSettings):
             raise ValueError("APP_DEBUG must be false when APP_ENV=production")
         if self.is_production and self.enable_api_docs:
             raise ValueError("ENABLE_API_DOCS must be false when APP_ENV=production")
+        if self.is_production and not self.database_url:
+            raise ValueError("DATABASE_URL must be set when APP_ENV=production")
+        if self.is_production and len(self.app_secret_key) < 32:
+            raise ValueError("APP_SECRET_KEY must be at least 32 characters in production")
         if "*" in self.cors_origins:
             raise ValueError("CORS_ALLOWED_ORIGINS must not contain '*'")
         return self

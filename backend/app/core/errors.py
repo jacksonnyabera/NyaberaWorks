@@ -89,14 +89,26 @@ async def http_exception_handler(request: Request, exc: StarletteHTTPException) 
     return error_response(request, exc.status_code, code, message, headers=exc.headers)
 
 
+def _field_name(loc: tuple[Any, ...]) -> str:
+    """Turn ("body", "email") into "email" so forms can match it to an input."""
+    parts = [str(part) for part in loc]
+    if parts and parts[0] in {"body", "query", "path", "header", "cookie"}:
+        parts = parts[1:]
+    return ".".join(parts)
+
+
+def _clean_message(message: str) -> str:
+    return message.removeprefix("Value error, ")
+
+
 async def validation_exception_handler(
     request: Request, exc: RequestValidationError
 ) -> JSONResponse:
     # Report where and why, but never echo the submitted values back.
     details = [
         {
-            "field": ".".join(str(part) for part in error["loc"]),
-            "message": error["msg"],
+            "field": _field_name(error["loc"]),
+            "message": _clean_message(error["msg"]),
             "type": error["type"],
         }
         for error in exc.errors()

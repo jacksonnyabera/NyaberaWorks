@@ -1,0 +1,16 @@
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+# E/F = core errors, I = import order, UP = modern Python, B = likely bugs
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+addopts = "-ra"
+
+[tool.ruff.lint.isort]
+# backend/alembic/ is our migrations folder, but "alembic" the library is third-party.
+known-third-party = ["alembic"]

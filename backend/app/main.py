@@ -13,6 +13,7 @@ from app.core.config import get_settings
 from app.core.errors import register_exception_handlers
 from app.core.logging_config import setup_logging
 from app.core.request_id import REQUEST_ID_HEADER, RequestIdMiddleware
+from app.modules.leads.router import router as leads_router
 
 
 def create_app() -> FastAPI:
@@ -42,8 +43,9 @@ def create_app() -> FastAPI:
 
     register_exception_handlers(app)
 
-    # Every API route lives under /api. Business routes will use /api/v1/... later.
+    # Every API route lives under /api. Business routes live under /api/v1.
     app.include_router(health.router, prefix="/api")
+    app.include_router(leads_router, prefix="/api/v1")
     return app
 
 
