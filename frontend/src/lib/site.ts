@@ -16,7 +16,7 @@ export const site = {
   phoneDisplay: "+254 798 304 161",
   phoneHref: "tel:+254798304161",
   whatsappHref: "https://wa.me/254798304161",
-  github: "https://github.com/jacksonmaobe",
+  github: "https://github.com/jacksonnyabera",
   locale: "en_KE",
 } as const;
 

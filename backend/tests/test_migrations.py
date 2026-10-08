@@ -31,7 +31,14 @@ def test_upgrade_then_downgrade_round_trip():
     engine = create_engine(TEST_URL or "")
     command.upgrade(config, "head")
     tables = set(inspect(engine).get_table_names())
-    assert {"contact_messages", "quote_requests", "bookings"} <= tables
+    assert {
+        "contact_messages",
+        "quote_requests",
+        "bookings",
+        "users",
+        "refresh_tokens",
+        "auth_events",
+    } <= tables
     command.downgrade(config, "base")
     assert "contact_messages" not in set(inspect(engine).get_table_names())
     engine.dispose()

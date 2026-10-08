@@ -86,7 +86,7 @@ export default function AboutPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    github.com/jacksonmaobe
+                    github.com/jacksonnyabera
                   </a>
                 </dd>
               </div>

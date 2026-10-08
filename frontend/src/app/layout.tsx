@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
+import { AuthProvider } from "@/components/auth/AuthProvider";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { JsonLd } from "@/components/seo/JsonLd";
@@ -80,11 +81,13 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <JsonLd data={organizationJsonLd} />
-        <Header />
-        <main id="main" className="flex-1">
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <Header />
+          <main id="main" className="flex-1">
+            {children}
+          </main>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   );

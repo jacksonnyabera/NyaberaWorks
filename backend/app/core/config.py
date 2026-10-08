@@ -37,10 +37,22 @@ class Settings(BaseSettings):
     app_secret_key: str = ""
     # Public form spam limit: submissions allowed per visitor per hour.
     lead_rate_limit_per_hour: int = 5
+    # Sign-in sessions. The access token lives in browser memory for a short time;
+    # the refresh token lives in an httpOnly cookie and is rotated on every use.
+    access_token_minutes: int = 15
+    refresh_token_days: int = 14
+    session_max_days: int = 30
+    login_max_failures: int = 5
+    login_lockout_minutes: int = 15
 
     @property
     def cors_origins(self) -> list[str]:
         return [o.strip() for o in self.cors_allowed_origins.split(",") if o.strip()]
+
+    @property
+    def cookie_secure(self) -> bool:
+        """Send cookies over HTTPS only (always true for a real https:// site)."""
+        return self.is_production or self.site_url.startswith("https://")
 
     @property
     def is_production(self) -> bool:

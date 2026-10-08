@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
+import { AccountLinks } from "@/components/auth/AccountLink";
 import { ButtonLink } from "@/components/ui/Button";
 import { cn } from "@/lib/cn";
 import { mainNav } from "@/lib/site";
@@ -65,6 +66,7 @@ export function Header() {
               {item.label}
             </Link>
           ))}
+          <AccountLinks linkClassName="text-[0.95rem] font-medium text-ink-soft transition-colors hover:text-teal" />
           <ButtonLink href="/quote">Start a project</ButtonLink>
         </nav>
 
@@ -98,6 +100,10 @@ export function Header() {
                 {item.label}
               </Link>
             ))}
+            <AccountLinks
+              className="border-b border-line py-4"
+              linkClassName="font-display text-2xl font-semibold text-ink"
+            />
             <div className="mt-8 flex flex-col gap-3">
               <ButtonLink href="/quote" size="lg">
                 Start a project

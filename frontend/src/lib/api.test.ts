@@ -32,3 +32,23 @@ describe("toApiFailure", () => {
     expect(result.message).not.toContain("stack trace");
   });
 });
+
+describe("toApiFailure for sign-in", () => {
+  it("uses the server message for wrong credentials", () => {
+    const result = toApiFailure(failure(401, { error: { message: "Incorrect email or password." } }));
+    expect(result.kind).toBe("auth");
+    expect(result.message).toBe("Incorrect email or password.");
+  });
+  it("maps a taken email to the email field", () => {
+    const result = toApiFailure(
+      failure(409, { error: { message: "Taken", details: [{ field: "email", message: "Already used" }] } }),
+    );
+    expect(result.kind).toBe("conflict");
+    expect(result.fieldErrors).toEqual({ email: "Already used" });
+  });
+  it("shows the lock-out message from the server", () => {
+    const result = toApiFailure(failure(429, { error: { message: "Try again in 15 minutes." } }));
+    expect(result.kind).toBe("rate-limit");
+    expect(result.message).toBe("Try again in 15 minutes.");
+  });
+});
