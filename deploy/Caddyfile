@@ -1,0 +1,29 @@
+# One domain. Caddy gets and renews the HTTPS certificate automatically.
+# /api/* goes to FastAPI, everything else to the Next.js website.
+
+{$DOMAIN} {
+	encode zstd gzip
+
+	header {
+		Strict-Transport-Security "max-age=31536000"
+		-Server
+	}
+
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		reverse_proxy web:3000
+	}
+
+	log {
+		output stdout
+		format console
+	}
+}
+
+# Send www.your-domain to the main address (needs a DNS record for www too).
+www.{$DOMAIN} {
+	redir https://{$DOMAIN}{uri} permanent
+}

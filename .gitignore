@@ -1,53 +1,25 @@
-# Secrets and environment files (the .example templates ARE committed)
+# Secrets: never commit these
 .env
 .env.*
 !.env.example
-*.pem
-*.key
-secrets/
+deploy/.env
+deploy/backups/
 
 # Python
-__pycache__/
-*.py[cod]
 .venv/
-venv/
+__pycache__/
+*.pyc
 .pytest_cache/
-.mypy_cache/
 .ruff_cache/
-.coverage
-htmlcov/
-*.egg-info/
-build/
-dist/
 
 # Node / Next.js
 node_modules/
 .next/
-out/
-*.tsbuildinfo
-npm-debug.log*
 coverage/
-playwright-report/
-test-results/
+*.tsbuildinfo
+next-env.d.ts
 
-# Local data and uploads
-storage/
-uploads/
-backups/
-*.sql
-*.dump
-*.sqlite3
-
-# Logs
-*.log
-logs/
-
-# Editors / OS
-.vscode/*
-!.vscode/extensions.json
-!.vscode/settings.json
-!.vscode/tasks.json
-.idea/
+# Editors and OS
+.vscode/
 .DS_Store
 Thumbs.db
-desktop.ini
