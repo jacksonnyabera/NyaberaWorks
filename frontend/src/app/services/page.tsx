@@ -4,7 +4,8 @@ import { CtaBand } from "@/components/home/CtaBand";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHeader, Section } from "@/components/ui/Section";
-import { formatStartingPrice, services } from "@/content/services";
+import { formatStartingPrice } from "@/content/services";
+import { getServices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -15,7 +16,8 @@ export const metadata = pageMetadata({
   path: "/services",
 });
 
-export default function ServicesPage() {
+export default async function ServicesPage() {
+  const services = await getServices();
   return (
     <>
       <JsonLd

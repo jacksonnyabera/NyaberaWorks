@@ -13,6 +13,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import Settings
 from app.core.errors import AppError
+from app.modules.catalog.service import is_valid_service_choice
 from app.modules.leads.models import Booking, ContactMessage, QuoteRequest
 from app.modules.leads.schemas import BookingIn, ContactIn, LeadReceipt, QuoteIn
 
@@ -57,6 +58,22 @@ def enforce_rate_limit(db: Session, ip_hash: str, settings: Settings) -> None:
         )
 
 
+def check_service(db: Session, slug: str) -> None:
+    if not is_valid_service_choice(db, slug):
+        raise AppError(
+            422,
+            "VALIDATION_ERROR",
+            "Request validation failed.",
+            [
+                {
+                    "field": "service",
+                    "message": "Choose a service from the list",
+                    "type": "value_error",
+                }
+            ],
+        )
+
+
 def _fake_receipt(kind: str) -> LeadReceipt:
     """Returned to bots that fill the hidden field. Nothing is saved."""
     return LeadReceipt(id="0", reference=new_reference(kind))
@@ -82,6 +99,7 @@ def _save(db: Session, model_cls, kind: str, values: dict) -> LeadReceipt:  # no
 def save_contact(db: Session, data: ContactIn, request: Request, settings: Settings) -> LeadReceipt:
     if data.website:
         return _fake_receipt("C")
+    check_service(db, data.service)
     ip_hash = hash_ip(client_ip(request), settings)
     enforce_rate_limit(db, ip_hash, settings)
     return _save(
@@ -102,6 +120,7 @@ def save_contact(db: Session, data: ContactIn, request: Request, settings: Setti
 def save_quote(db: Session, data: QuoteIn, request: Request, settings: Settings) -> LeadReceipt:
     if data.website:
         return _fake_receipt("Q")
+    check_service(db, data.service)
     ip_hash = hash_ip(client_ip(request), settings)
     enforce_rate_limit(db, ip_hash, settings)
     return _save(
@@ -124,6 +143,7 @@ def save_quote(db: Session, data: QuoteIn, request: Request, settings: Settings)
 def save_booking(db: Session, data: BookingIn, request: Request, settings: Settings) -> LeadReceipt:
     if data.website:
         return _fake_receipt("B")
+    check_service(db, data.service)
     ip_hash = hash_ip(client_ip(request), settings)
     enforce_rate_limit(db, ip_hash, settings)
     return _save(

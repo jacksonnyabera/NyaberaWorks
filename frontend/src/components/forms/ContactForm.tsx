@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/Button";
 import { endpoints } from "@/lib/api";
+import type { ServiceChoice } from "@/lib/catalog";
 import { contactSchema, type ContactValues } from "@/lib/schemas";
 
 import { HoneypotField, SelectField, TextAreaField, TextField } from "./fields";
@@ -13,7 +14,7 @@ import { PrivacyNote, ServerError, SubmitSuccess } from "./FormParts";
 import { ServiceOptions, validServiceSlug } from "./ServiceOptions";
 import { useLeadSubmit } from "./useLeadSubmit";
 
-export function ContactForm() {
+export function ContactForm({ services }: { services: ServiceChoice[] }) {
   const params = useSearchParams();
   const {
     register,
@@ -27,7 +28,7 @@ export function ContactForm() {
       name: "",
       email: "",
       phone: "",
-      service: validServiceSlug(params.get("service")),
+      service: validServiceSlug(params.get("service"), services),
       message: "",
       website: "",
     },
@@ -67,7 +68,7 @@ export function ContactForm() {
           {...register("phone")}
         />
         <SelectField id="contact-service" label="Service" error={errors.service?.message} {...register("service")}>
-          <ServiceOptions />
+          <ServiceOptions services={services} />
         </SelectField>
       </div>
       <TextAreaField

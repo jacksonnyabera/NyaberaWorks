@@ -1,12 +1,11 @@
-import type { Metadata } from "next";
-
-import { AdminContent } from "./AdminContent";
-
-export const metadata: Metadata = {
-  title: "Admin",
-  robots: { index: false, follow: false },
-};
+import { AdminHeading } from "@/components/admin/AdminShell";
+import { AdminOverviewPanel } from "@/components/auth/AdminOverviewPanel";
 
 export default function AdminPage() {
-  return <AdminContent />;
+  return (
+    <>
+      <AdminHeading title="Overview" intro="A summary of what needs your attention." />
+      <AdminOverviewPanel />
+    </>
+  );
 }

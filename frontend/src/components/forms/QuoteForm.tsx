@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
 import { budgetOptions } from "@/content/general";
 import { endpoints } from "@/lib/api";
+import type { ServiceChoice } from "@/lib/catalog";
 import { quoteSchema, type QuoteValues } from "@/lib/schemas";
 
 import { HoneypotField, SelectField, TextAreaField, TextField } from "./fields";
@@ -14,7 +15,7 @@ import { PrivacyNote, ServerError, SubmitSuccess } from "./FormParts";
 import { ServiceOptions, validServiceSlug } from "./ServiceOptions";
 import { useLeadSubmit } from "./useLeadSubmit";
 
-export function QuoteForm() {
+export function QuoteForm({ services }: { services: ServiceChoice[] }) {
   const params = useSearchParams();
   const {
     register,
@@ -28,7 +29,7 @@ export function QuoteForm() {
       name: "",
       email: "",
       phone: "",
-      service: validServiceSlug(params.get("service")),
+      service: validServiceSlug(params.get("service"), services),
       budget: undefined,
       deadline: "",
       description: "",
@@ -63,7 +64,7 @@ export function QuoteForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField id="quote-phone" label="Phone" type="tel" autoComplete="tel" optional error={errors.phone?.message} {...register("phone")} />
         <SelectField id="quote-service" label="Service" error={errors.service?.message} {...register("service")}>
-          <ServiceOptions />
+          <ServiceOptions services={services} />
         </SelectField>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">

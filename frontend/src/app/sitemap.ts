@@ -1,10 +1,10 @@
 import type { MetadataRoute } from "next";
 
-import { projects } from "@/content/projects";
-import { services } from "@/content/services";
+import { getProjects, getServices } from "@/lib/catalog";
 import { absoluteUrl } from "@/lib/site";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [services, projects] = await Promise.all([getServices(), getProjects()]);
   const fixed = ["/", "/services", "/portfolio", "/about", "/faq", "/contact", "/quote", "/book", "/privacy", "/terms"];
   return [
     ...fixed.map((path) => ({

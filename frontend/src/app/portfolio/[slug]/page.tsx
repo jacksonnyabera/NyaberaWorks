@@ -8,21 +8,19 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { StatusBadge, Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section } from "@/components/ui/Section";
-import { getProject, projects } from "@/content/projects";
+import { getProject, getProjects } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return projects.map((p) => ({ slug: p.slug }));
+export async function generateStaticParams() {
+  return (await getProjects()).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) return {};
   return pageMetadata({
     title: `${project.title}: case study`,
@@ -33,10 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ProjectPage({ params }: Props) {
   const { slug } = await params;
-  const project = getProject(slug);
+  const project = await getProject(slug);
   if (!project) notFound();
 
-  const others = projects.filter((p) => p.slug !== project.slug).slice(0, 3);
+  const others = (await getProjects()).filter((p) => p.slug !== project.slug).slice(0, 3);
 
   const blocks: { title: string; body: string }[] = [
     { title: "The problem", body: project.problem },

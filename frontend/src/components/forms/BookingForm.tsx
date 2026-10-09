@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/Button";
 import { timeSlots } from "@/content/general";
 import { endpoints } from "@/lib/api";
+import type { ServiceChoice } from "@/lib/catalog";
 import { bookingSchema, type BookingValues } from "@/lib/schemas";
 
 import { HoneypotField, SelectField, TextAreaField, TextField } from "./fields";
@@ -14,7 +15,7 @@ import { PrivacyNote, ServerError, SubmitSuccess } from "./FormParts";
 import { ServiceOptions, validServiceSlug } from "./ServiceOptions";
 import { useLeadSubmit } from "./useLeadSubmit";
 
-export function BookingForm() {
+export function BookingForm({ services }: { services: ServiceChoice[] }) {
   const params = useSearchParams();
   const {
     register,
@@ -28,7 +29,7 @@ export function BookingForm() {
       name: "",
       email: "",
       phone: "",
-      service: validServiceSlug(params.get("service")),
+      service: validServiceSlug(params.get("service"), services),
       preferredDate: "",
       preferredTime: undefined,
       requirements: "",
@@ -62,7 +63,7 @@ export function BookingForm() {
       <div className="grid gap-5 sm:grid-cols-2">
         <TextField id="booking-phone" label="Phone" type="tel" autoComplete="tel" error={errors.phone?.message} {...register("phone")} />
         <SelectField id="booking-service" label="Service" error={errors.service?.message} {...register("service")}>
-          <ServiceOptions />
+          <ServiceOptions services={services} />
         </SelectField>
       </div>
       <div className="grid gap-5 sm:grid-cols-2">

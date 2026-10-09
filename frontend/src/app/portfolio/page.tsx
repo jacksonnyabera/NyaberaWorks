@@ -3,7 +3,7 @@ import { ProjectCard } from "@/components/portfolio/ProjectCard";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHeader, Section } from "@/components/ui/Section";
-import { projects } from "@/content/projects";
+import { getProjects } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
@@ -14,7 +14,8 @@ export const metadata = pageMetadata({
   path: "/portfolio",
 });
 
-export default function PortfolioPage() {
+export default async function PortfolioPage() {
+  const projects = await getProjects();
   return (
     <>
       <JsonLd

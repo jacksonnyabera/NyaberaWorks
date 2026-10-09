@@ -11,7 +11,7 @@ function setup() {
   const client = new QueryClient();
   render(
     <QueryClientProvider client={client}>
-      <ContactForm />
+      <ContactForm services={[{ slug: "python-automation", title: "Python Automation" }]} />
     </QueryClientProvider>,
   );
 }

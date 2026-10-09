@@ -2,6 +2,7 @@ import { BookingForm } from "@/components/forms/BookingForm";
 import { FormBoundary } from "@/components/forms/FormBoundary";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHeader, Section } from "@/components/ui/Section";
+import { getServiceChoices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -11,7 +12,8 @@ export const metadata = pageMetadata({
   path: "/book",
 });
 
-export default function BookPage() {
+export default async function BookPage() {
+  const services = await getServiceChoices();
   return (
     <>
       <JsonLd
@@ -27,7 +29,7 @@ export default function BookPage() {
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <FormBoundary>
-            <BookingForm />
+            <BookingForm services={services} />
           </FormBoundary>
           <aside aria-label="How booking works" className="space-y-6">
             <h2 className="text-xl">How booking works</h2>

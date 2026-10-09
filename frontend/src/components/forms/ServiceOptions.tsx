@@ -1,6 +1,6 @@
-import { services } from "@/content/services";
+import type { ServiceChoice } from "@/lib/catalog";
 
-export function ServiceOptions() {
+export function ServiceOptions({ services }: { services: ServiceChoice[] }) {
   return (
     <>
       <option value="">Choose a service</option>
@@ -14,7 +14,7 @@ export function ServiceOptions() {
   );
 }
 
-export function validServiceSlug(value: string | null): string {
+export function validServiceSlug(value: string | null, services: ServiceChoice[]): string {
   if (!value) return "";
   return value === "other" || services.some((s) => s.slug === value) ? value : "";
 }

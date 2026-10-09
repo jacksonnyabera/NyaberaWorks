@@ -18,32 +18,6 @@ from pydantic import (
     field_validator,
 )
 
-# Keep in sync with frontend/src/content/services.ts (Batch D moves services into the database).
-SERVICE_SLUGS = (
-    "custom-website-development",
-    "business-web-applications",
-    "python-backend-api-development",
-    "python-automation",
-    "data-analysis-reporting",
-    "database-api-integration",
-    "website-maintenance",
-    "biomedical-engineering-technical-support",
-    "technical-documentation",
-    "other",
-)
-ServiceSlug = Literal[
-    "custom-website-development",
-    "business-web-applications",
-    "python-backend-api-development",
-    "python-automation",
-    "data-analysis-reporting",
-    "database-api-integration",
-    "website-maintenance",
-    "biomedical-engineering-technical-support",
-    "technical-documentation",
-    "other",
-]
-
 # Keep in sync with frontend/src/content/general.ts.
 Budget = Literal[
     "Under KES 20,000",
@@ -85,7 +59,8 @@ class LeadBase(BaseModel):
     name: PersonName
     email: Email
     phone: Text | None = None
-    service: ServiceSlug
+    # Checked against the service catalogue in the database (see service.py).
+    service: Annotated[str, StringConstraints(strip_whitespace=True, min_length=1, max_length=80)]
     # Hidden spam trap. Real visitors never see or fill it in.
     website: str = Field(default="", max_length=200)
 

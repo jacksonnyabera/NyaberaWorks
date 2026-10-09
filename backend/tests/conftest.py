@@ -17,6 +17,7 @@ from app import db_models  # noqa: F401  (registers every table)
 from app.core.config import get_settings
 from app.core.db import Base, get_db
 from app.main import create_app
+from app.modules.catalog.seed import seed_catalog
 
 
 @pytest.fixture(autouse=True)
@@ -46,7 +47,10 @@ def db_session_factory() -> Iterator[sessionmaker[Session]]:
         poolclass=StaticPool,
     )
     Base.metadata.create_all(engine)
-    yield sessionmaker(bind=engine, expire_on_commit=False)
+    factory = sessionmaker(bind=engine, expire_on_commit=False)
+    with factory() as session:
+        seed_catalog(session)  # the forms only accept services that exist in the catalogue
+    yield factory
     engine.dispose()
 
 

@@ -8,8 +8,8 @@ import { Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section, SectionHeading } from "@/components/ui/Section";
 import { processSteps, reasons, skillGroups } from "@/content/general";
-import { projects } from "@/content/projects";
-import { formatStartingPrice, services } from "@/content/services";
+import { formatStartingPrice } from "@/content/services";
+import { getProjects, getServices } from "@/lib/catalog";
 import { pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -42,7 +42,8 @@ const biomedicalAreas = [
   },
 ];
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [services, projects] = await Promise.all([getServices(), getProjects()]);
   const featured = projects.filter((p) => p.featured);
 
   return (
@@ -96,7 +97,7 @@ export default function HomePage() {
         <SectionHeading
           id="services-title"
           title="What I build"
-          intro="Nine services, each with a written scope, a timeline and a price before any work begins."
+          intro="Each service comes with a written scope, a timeline and a price before any work begins."
         />
         <ul className="mt-12 grid gap-x-14 md:grid-cols-2">
           {services.map((s) => (

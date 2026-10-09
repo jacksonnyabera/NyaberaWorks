@@ -1,6 +1,6 @@
 import Link from "next/link";
 
-import { services } from "@/content/services";
+import { getServices } from "@/lib/catalog";
 import { site } from "@/lib/site";
 
 import { Logo } from "./Logo";
@@ -14,7 +14,8 @@ const company = [
   { href: "/book", label: "Book a service" },
 ];
 
-export function Footer() {
+export async function Footer() {
+  const services = await getServices();
   const year = new Date().getFullYear();
   const linkClass = "text-mist transition-colors hover:text-white";
   return (

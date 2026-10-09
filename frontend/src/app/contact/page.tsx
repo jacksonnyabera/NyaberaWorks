@@ -2,6 +2,7 @@ import { ContactForm } from "@/components/forms/ContactForm";
 import { FormBoundary } from "@/components/forms/FormBoundary";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHeader, Section } from "@/components/ui/Section";
+import { getServiceChoices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 
@@ -11,7 +12,8 @@ export const metadata = pageMetadata({
   path: "/contact",
 });
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const services = await getServiceChoices();
   return (
     <>
       <JsonLd
@@ -27,7 +29,7 @@ export default function ContactPage() {
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <FormBoundary>
-            <ContactForm />
+            <ContactForm services={services} />
           </FormBoundary>
           <aside aria-label="Other ways to reach me" className="space-y-8">
             <div>

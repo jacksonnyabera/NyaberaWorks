@@ -1,0 +1,223 @@
+[
+  {
+    "slug": "custom-website-development",
+    "title": "Custom Website Development",
+    "summary": "Fast, search-friendly websites that explain what you do and turn visitors into enquiries.",
+    "description": "A website designed around your business, not a template with your logo on it. Pages are written to be clear, load quickly on mobile connections, and rank for the searches your customers actually make.",
+    "problem": "Your business has no website, or the one you have is slow, hard to use on a phone, or does not bring in enquiries.",
+    "deliverables": [
+      "Responsive design for phone, tablet and desktop",
+      "Page structure and copy guidance focused on enquiries",
+      "On-page SEO: titles, descriptions, sitemap, structured data",
+      "Contact and quote forms that reach your inbox",
+      "Deployment, domain and HTTPS setup",
+      "A short handover so you can request edits with confidence"
+    ],
+    "technologies": [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS"
+    ],
+    "timeline": "2 to 5 weeks, depending on the number of pages",
+    "startingPriceKes": null,
+    "bestFor": "Small businesses, professionals and organisations that need a credible online presence.",
+    "sortOrder": 10
+  },
+  {
+    "slug": "business-web-applications",
+    "title": "Business Web Applications",
+    "summary": "Custom internal tools and customer portals that replace spreadsheets and manual follow-up.",
+    "description": "When a spreadsheet, a WhatsApp group and a paper register stop scaling, a purpose-built web application keeps the work in one place, with user accounts, roles and a record of who did what.",
+    "problem": "Your team tracks work across spreadsheets and chats, information goes missing, and nobody has a single reliable view.",
+    "deliverables": [
+      "Requirements workshop and a written scope",
+      "User accounts with role-based access",
+      "Dashboards and reports for the numbers you track",
+      "Secure database design and backups guidance",
+      "Deployment to a server you control",
+      "Documentation for the people who will use and maintain it"
+    ],
+    "technologies": [
+      "Next.js",
+      "FastAPI",
+      "PostgreSQL",
+      "TypeScript"
+    ],
+    "timeline": "6 to 14 weeks, depending on scope",
+    "startingPriceKes": null,
+    "bestFor": "Teams, clinics, shops and service businesses with a repeatable process to digitise.",
+    "sortOrder": 20
+  },
+  {
+    "slug": "python-backend-api-development",
+    "title": "Python Backend & API Development",
+    "summary": "Clean, documented APIs and server logic that your apps and partners can rely on.",
+    "description": "The part of your product that nobody sees but everybody depends on: data models, business rules, authentication and integrations, delivered with automated tests and interactive API documentation.",
+    "problem": "Your front end, mobile app or partner needs a dependable backend, or an existing backend is fragile and undocumented.",
+    "deliverables": [
+      "REST API with validation and consistent error responses",
+      "Database schema and migrations",
+      "Authentication and authorisation",
+      "Automated tests and linting",
+      "Interactive API documentation",
+      "Deployment notes and environment configuration"
+    ],
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "Flask",
+      "SQLAlchemy",
+      "PostgreSQL"
+    ],
+    "timeline": "3 to 8 weeks, depending on the number of endpoints",
+    "startingPriceKes": null,
+    "bestFor": "Founders and teams building a product, and businesses that need systems to talk to each other.",
+    "sortOrder": 30
+  },
+  {
+    "slug": "python-automation",
+    "title": "Python Automation",
+    "summary": "Scripts and small tools that take repetitive manual work off your plate.",
+    "description": "If someone on your team copies data between files, renames documents, builds the same report every week or sends the same messages by hand, that work can usually be automated reliably.",
+    "problem": "Staff spend hours each week on copy-paste work that is slow, boring and easy to get wrong.",
+    "deliverables": [
+      "A script or small tool built for your exact process",
+      "Clear instructions for running it, with logging",
+      "Handling for messy inputs and clear error messages",
+      "Scheduling on your computer or a server where appropriate",
+      "Source code you can keep"
+    ],
+    "technologies": [
+      "Python",
+      "pandas",
+      "ReportLab",
+      "Node.js"
+    ],
+    "timeline": "3 days to 3 weeks",
+    "startingPriceKes": null,
+    "bestFor": "Offices, clinics, shops and freelancers with repetitive document, spreadsheet or messaging work.",
+    "sortOrder": 40
+  },
+  {
+    "slug": "data-analysis-reporting",
+    "title": "Data Analysis & Reporting",
+    "summary": "Turn raw spreadsheets and exports into clean reports you can make decisions from.",
+    "description": "Cleaning, combining and summarising your data, then presenting it in a form that answers the questions you actually have: what is selling, what is late, where is the money going.",
+    "problem": "You have data in spreadsheets or exports, but no clear picture of what it says and no time to build the reports.",
+    "deliverables": [
+      "Data cleaning and validation",
+      "Analysis tied to the questions you set",
+      "Tables and charts in a readable report",
+      "Reusable scripts so reports can be refreshed",
+      "A plain-language summary of findings and limits"
+    ],
+    "technologies": [
+      "Python",
+      "pandas",
+      "scikit-learn",
+      "Excel / CSV"
+    ],
+    "timeline": "1 to 4 weeks",
+    "startingPriceKes": null,
+    "bestFor": "Managers, researchers and small businesses who need clarity from existing data.",
+    "sortOrder": 50
+  },
+  {
+    "slug": "database-api-integration",
+    "title": "Database & API Integration",
+    "summary": "Connect the systems you already use so data moves without retyping.",
+    "description": "Link your website, payment provider, database and internal tools so they share information automatically, with sensible error handling for the times a connection fails.",
+    "problem": "Your tools do not talk to each other, so someone retypes orders, payments or contacts from one system to another.",
+    "deliverables": [
+      "Integration design and a written plan",
+      "Secure handling of API keys and secrets",
+      "Retries and logging for failed calls",
+      "Webhook endpoints verified on the server",
+      "Testing against the provider's sandbox where one exists"
+    ],
+    "technologies": [
+      "Python",
+      "FastAPI",
+      "PostgreSQL",
+      "REST",
+      "Webhooks"
+    ],
+    "timeline": "1 to 6 weeks, depending on the systems involved",
+    "startingPriceKes": null,
+    "bestFor": "Businesses taking online payments or running several tools that should share data.",
+    "sortOrder": 60
+  },
+  {
+    "slug": "website-maintenance",
+    "title": "Website Maintenance",
+    "summary": "Keep your site updated, secure and working after launch, without hiring a full-time developer.",
+    "description": "A steady hand for the small things that pile up: content changes, dependency updates, backups, uptime checks and fixing what breaks.",
+    "problem": "Your site was built and then left alone. Updates are overdue, small edits take weeks, and nobody owns problems when they appear.",
+    "deliverables": [
+      "Content and small feature changes",
+      "Dependency and security updates",
+      "Backup and uptime checks",
+      "Bug fixes",
+      "A short monthly summary of what was done"
+    ],
+    "technologies": [
+      "Next.js",
+      "Python",
+      "PostgreSQL",
+      "Docker"
+    ],
+    "timeline": "Ongoing, agreed monthly",
+    "startingPriceKes": null,
+    "bestFor": "Owners of existing websites and web apps, including ones I did not build.",
+    "sortOrder": 70
+  },
+  {
+    "slug": "biomedical-engineering-technical-support",
+    "title": "Biomedical Engineering Technical Support",
+    "summary": "Software and documentation support for equipment records, maintenance schedules and technical processes in healthcare settings.",
+    "description": "I combine my biomedical engineering studies with software skills to help clinics and facilities organise equipment inventories, track maintenance schedules and produce clear technical documentation and tools.",
+    "problem": "Equipment records live on paper or scattered spreadsheets, maintenance dates get missed, and there is no easy way to see what needs attention.",
+    "deliverables": [
+      "Equipment inventory and maintenance-tracking tools",
+      "Maintenance schedule and overdue reporting",
+      "Technical documentation and standard procedure write-ups",
+      "Data summaries for management decisions"
+    ],
+    "technologies": [
+      "Python",
+      "React",
+      "PostgreSQL",
+      "pandas"
+    ],
+    "timeline": "2 to 8 weeks, depending on scope",
+    "startingPriceKes": null,
+    "bestFor": "Small hospitals, clinics and laboratories that want better records and reporting.",
+    "note": "This is technical and software support. It does not replace inspection, calibration or sign-off by licensed clinical or biomedical engineers where regulations require it.",
+    "sortOrder": 80
+  },
+  {
+    "slug": "technical-documentation",
+    "title": "Technical Documentation",
+    "summary": "Clear manuals, guides and specifications that people can follow.",
+    "description": "Good documentation saves support time and makes handovers safe. I write and format user guides, system documentation and procedures, and can generate them as polished PDFs.",
+    "problem": "Knowledge sits in one person's head, new staff learn by asking around, and nobody can tell how a system works.",
+    "deliverables": [
+      "User guides and quick-start sheets",
+      "System and API documentation",
+      "Standard operating procedures",
+      "PDF and web formats",
+      "Review rounds with your team"
+    ],
+    "technologies": [
+      "Markdown",
+      "Python",
+      "ReportLab",
+      "PDF"
+    ],
+    "timeline": "3 days to 4 weeks",
+    "startingPriceKes": null,
+    "bestFor": "Teams handing over a system, training staff or preparing for an audit.",
+    "sortOrder": 90
+  }
+]

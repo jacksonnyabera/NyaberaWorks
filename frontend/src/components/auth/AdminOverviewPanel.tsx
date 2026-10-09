@@ -2,7 +2,6 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-import { Providers } from "@/components/providers";
 import { Alert, Skeleton } from "@/components/ui/states";
 import { toApiFailure } from "@/lib/api";
 import { fetchAdminOverview } from "@/lib/auth-api";
@@ -33,9 +32,5 @@ function Overview() {
 }
 
 export function AdminOverviewPanel() {
-  return (
-    <Providers>
-      <Overview />
-    </Providers>
-  );
+  return <Overview />;
 }

@@ -2,6 +2,7 @@ import { FormBoundary } from "@/components/forms/FormBoundary";
 import { QuoteForm } from "@/components/forms/QuoteForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { PageHeader, Section } from "@/components/ui/Section";
+import { getServiceChoices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -11,7 +12,8 @@ export const metadata = pageMetadata({
   path: "/quote",
 });
 
-export default function QuotePage() {
+export default async function QuotePage() {
+  const services = await getServiceChoices();
   return (
     <>
       <JsonLd
@@ -27,7 +29,7 @@ export default function QuotePage() {
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <FormBoundary>
-            <QuoteForm />
+            <QuoteForm services={services} />
           </FormBoundary>
           <aside aria-label="What happens next" className="space-y-6">
             <h2 className="text-xl">What happens next</h2>

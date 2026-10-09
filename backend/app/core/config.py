@@ -44,6 +44,17 @@ class Settings(BaseSettings):
     session_max_days: int = 30
     login_max_failures: int = 5
     login_lockout_minutes: int = 15
+    # Email notifications to you when a visitor submits a form.
+    # "console" only writes a short line to the log (fine for development).
+    # "smtp" sends real email through your mail provider.
+    email_backend: Literal["console", "smtp"] = "console"
+    smtp_host: str = ""
+    smtp_port: int = 587
+    smtp_username: str = ""
+    smtp_password: str = ""
+    smtp_starttls: bool = True
+    email_from: str = ""
+    admin_notify_email: str = ""
 
     @property
     def cors_origins(self) -> list[str]:
@@ -68,6 +79,14 @@ class Settings(BaseSettings):
             raise ValueError("DATABASE_URL must be set when APP_ENV=production")
         if self.is_production and len(self.app_secret_key) < 32:
             raise ValueError("APP_SECRET_KEY must be at least 32 characters in production")
+        if self.email_backend == "smtp":
+            missing = [
+                name.upper()
+                for name in ("smtp_host", "email_from", "admin_notify_email")
+                if not getattr(self, name)
+            ]
+            if missing:
+                raise ValueError(f"EMAIL_BACKEND=smtp needs these set: {', '.join(missing)}")
         if "*" in self.cors_origins:
             raise ValueError("CORS_ALLOWED_ORIGINS must not contain '*'")
         return self

@@ -7,21 +7,20 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section } from "@/components/ui/Section";
-import { formatStartingPrice, getService, services } from "@/content/services";
+import { formatStartingPrice } from "@/content/services";
+import { getService, getServices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
-export const dynamicParams = false;
-
-export function generateStaticParams() {
-  return services.map((s) => ({ slug: s.slug }));
+export async function generateStaticParams() {
+  return (await getServices()).map((s) => ({ slug: s.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getService(slug);
   if (!service) return {};
   return pageMetadata({
     title: service.title,
@@ -32,10 +31,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function ServiceDetailPage({ params }: Props) {
   const { slug } = await params;
-  const service = getService(slug);
+  const service = await getService(slug);
   if (!service) notFound();
 
-  const others = services.filter((s) => s.slug !== service.slug).slice(0, 3);
+  const others = (await getServices()).filter((s) => s.slug !== service.slug).slice(0, 3);
 
   return (
     <>

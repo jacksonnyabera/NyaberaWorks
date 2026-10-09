@@ -7,12 +7,18 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from app.core.db import get_db
+from app.modules.admin import catalog, clients, leads
 from app.modules.auth.deps import require_admin
 from app.modules.auth.schemas import CamelModel
 from app.modules.leads.models import Booking, ContactMessage, QuoteRequest
 from app.modules.users.models import User
 
 router = APIRouter(prefix="/admin", tags=["admin"], dependencies=[Depends(require_admin)])
+
+
+router.include_router(leads.router)
+router.include_router(clients.router)
+router.include_router(catalog.router)
 
 
 class Overview(CamelModel):
