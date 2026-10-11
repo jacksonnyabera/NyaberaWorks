@@ -44,6 +44,9 @@ class Settings(BaseSettings):
     session_max_days: int = 30
     login_max_failures: int = 5
     login_lockout_minutes: int = 15
+    # Shared with the website server (Cloud Run). When it matches the X-Proxy-Secret header,
+    # the X-Client-IP header is trusted as the visitor's address. Empty = never trusted.
+    proxy_shared_secret: str = ""
     # Email notifications to you when a visitor submits a form.
     # "console" only writes a short line to the log (fine for development).
     # "smtp" sends real email through your mail provider.
@@ -55,6 +58,9 @@ class Settings(BaseSettings):
     smtp_starttls: bool = True
     email_from: str = ""
     admin_notify_email: str = ""
+    # Send the notification before replying instead of after. Needed on hosts that
+    # pause the server as soon as the reply is sent (Cloud Run).
+    email_send_inline: bool = False
 
     @property
     def cors_origins(self) -> list[str]:
@@ -79,6 +85,8 @@ class Settings(BaseSettings):
             raise ValueError("DATABASE_URL must be set when APP_ENV=production")
         if self.is_production and len(self.app_secret_key) < 32:
             raise ValueError("APP_SECRET_KEY must be at least 32 characters in production")
+        if self.proxy_shared_secret and len(self.proxy_shared_secret) < 32:
+            raise ValueError("PROXY_SHARED_SECRET must be at least 32 characters")
         if self.email_backend == "smtp":
             missing = [
                 name.upper()

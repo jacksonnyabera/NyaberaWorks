@@ -25,7 +25,11 @@ def _notify_if_real(
     settings: Settings,  # noqa: ANN001
 ) -> None:
     # Bots that fill the hidden field get a fake receipt (id "0"); nothing was saved.
-    if receipt.id != "0":
+    if receipt.id == "0":
+        return
+    if settings.email_send_inline:
+        notify_new_lead(kind, data, receipt, settings)  # never raises
+    else:
         tasks.add_task(notify_new_lead, kind, data, receipt, settings)
 
 

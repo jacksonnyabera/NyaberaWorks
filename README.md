@@ -32,11 +32,11 @@ Open http://127.0.0.1:3000. Checks: `ruff check .` and `python -m pytest -q` in 
 
 ## Going live
 
-Follow [docs/11-go-live.md](docs/11-go-live.md). Production files are in `deploy/`.
+Two routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md)), or free-tier Google Cloud Run + Neon ([docs/12-go-live-cloud-run.md](docs/12-go-live-cloud-run.md)). Production files are in `deploy/`.
 
 ## Documentation
 
-`PROJECT_SPEC.md` and `docs/01`–`11` (architecture, database, API, frontend, flows, admin, payments, security, roadmap, deployment, go-live).
+`PROJECT_SPEC.md` and `docs/01`–`12` (architecture, database, API, frontend, flows, admin, payments, security, roadmap, deployment, go-live, go-live on Cloud Run).
 
 ## Secrets
 

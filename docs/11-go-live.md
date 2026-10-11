@@ -1,5 +1,7 @@
 # 11 — Going live
 
+> **Prefer to start for free?** `12-go-live-cloud-run.md` deploys the same project on Google Cloud Run with a free Neon database instead of a server.
+
 This guide takes NyaberaWorks from your laptop to a public website on your own domain. Follow it in order. Everything runs on one small Linux server using Docker.
 
 What you will end up with: `https://your-domain` serving the website, `/api/*` served by the API, PostgreSQL storing the data, HTTPS certificates that renew themselves, daily backups, and email notifications to you.

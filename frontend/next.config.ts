@@ -1,8 +1,7 @@
 import type { NextConfig } from "next";
 
-// In development the browser talks only to Next.js (port 3000) and Next.js
-// forwards /api/* to FastAPI. In production Caddy does this routing instead.
-const apiTarget = process.env.API_PROXY_TARGET ?? "http://127.0.0.1:8000";
+// /api/* is forwarded to FastAPI by src/app/api/[...path]/route.ts (development
+// and Cloud Run). With Docker + Caddy, Caddy routes /api before Next.js sees it.
 
 const securityHeaders = [
   { key: "X-Content-Type-Options", value: "nosniff" },
@@ -19,10 +18,6 @@ const nextConfig: NextConfig = {
   output: process.env.NEXT_OUTPUT === "standalone" ? "standalone" : undefined,
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }];
-  },
-  async rewrites() {
-    if (process.env.NODE_ENV === "production") return [];
-    return [{ source: "/api/:path*", destination: `${apiTarget}/api/:path*` }];
   },
 };
 

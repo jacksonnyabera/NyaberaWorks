@@ -11,6 +11,7 @@ from sqlalchemy import func, select
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm import Session
 
+from app.core.client_ip import client_ip
 from app.core.config import Settings
 from app.core.errors import AppError
 from app.modules.catalog.service import is_valid_service_choice
@@ -26,11 +27,6 @@ _LEAD_TABLES = (ContactMessage, QuoteRequest, Booking)
 
 def new_reference(kind: str) -> str:
     return f"NW-{kind}-" + "".join(secrets.choice(_ALPHABET) for _ in range(8))
-
-
-def client_ip(request: Request) -> str:
-    # Behind Caddy, uvicorn is started with --proxy-headers so this is the real visitor.
-    return request.client.host if request.client else "unknown"
 
 
 def hash_ip(ip: str, settings: Settings) -> str:

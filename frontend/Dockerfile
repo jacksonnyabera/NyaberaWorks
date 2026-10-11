@@ -9,7 +9,7 @@ FROM node:22-alpine AS build
 WORKDIR /app
 # The public address is part of every canonical link and social preview, so it is
 # fixed when the site is built. Rebuild if the domain changes.
-ARG NEXT_PUBLIC_SITE_URL
+ARG NEXT_PUBLIC_SITE_URL=https://nyaberaworks.co.ke
 ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
     NEXT_OUTPUT=standalone \
     NEXT_TELEMETRY_DISABLED=1

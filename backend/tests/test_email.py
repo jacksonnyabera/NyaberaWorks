@@ -109,3 +109,16 @@ def test_header_injection_is_not_possible(smtp):
 def test_smtp_needs_its_settings():
     with pytest.raises(ValueError, match="SMTP_HOST"):
         Settings(email_backend="smtp", _env_file=None)
+
+
+def test_inline_mode_sends_before_the_reply(client, smtp, monkeypatch):
+    monkeypatch.setenv("EMAIL_SEND_INLINE", "true")
+    get_settings.cache_clear()
+    order = []
+    original = FakeSMTP.send_message
+    FakeSMTP.send_message = lambda self, message: (order.append("sent"), original(self, message))[1]
+    try:
+        response = client.post("/api/v1/contact-messages", json=CONTACT)
+    finally:
+        FakeSMTP.send_message = original
+    assert response.status_code == 201 and order == ["sent"]

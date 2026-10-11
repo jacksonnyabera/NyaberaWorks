@@ -33,7 +33,16 @@ def get_engine() -> Engine:
     url = get_settings().database_url
     if not url:
         raise RuntimeError("DATABASE_URL is not set. Add it to backend/.env (see .env.example).")
-    return create_engine(url, pool_pre_ping=True, pool_size=5, max_overflow=5)
+    return create_engine(
+        url,
+        pool_pre_ping=True,  # reconnect if the database closed an idle connection
+        pool_recycle=300,
+        pool_size=5,
+        max_overflow=5,
+        # No prepared statements: required by connection poolers such as Neon's;
+        # a short connect timeout so a sleeping database wakes instead of hanging.
+        connect_args={"prepare_threshold": None, "connect_timeout": 15},
+    )
 
 
 @lru_cache
