@@ -26,15 +26,19 @@ export type ProxyConfig = {
   sharedSecret?: string;
   /** How many entries from the right of X-Forwarded-For hold the visitor (1 = the last). */
   hopsFromRight: number;
+  /** How long to wait for the API. Raise it where the API sleeps when idle (free hosting). */
+  timeoutMs?: number;
 };
 
 export function proxyConfigFromEnv(env: Record<string, string | undefined> = process.env): ProxyConfig {
   const apiBase = env.API_INTERNAL_URL || env.API_PROXY_TARGET || "http://127.0.0.1:8000";
   const hops = Number.parseInt(env.CLIENT_IP_HOPS_FROM_RIGHT ?? "1", 10);
+  const timeout = Number.parseInt(env.API_PROXY_TIMEOUT_MS ?? "", 10);
   return {
     apiBase: apiBase.replace(/\/$/, ""),
     sharedSecret: env.PROXY_SHARED_SECRET || undefined,
     hopsFromRight: Number.isInteger(hops) && hops >= 1 ? hops : 1,
+    timeoutMs: timeout >= 1000 && timeout <= 90_000 ? timeout : UPSTREAM_TIMEOUT_MS,
   };
 }
 
@@ -87,7 +91,7 @@ export async function proxyToApi(request: Request, config: ProxyConfig): Promise
       body,
       redirect: "manual",
       cache: "no-store",
-      signal: AbortSignal.timeout(UPSTREAM_TIMEOUT_MS),
+      signal: AbortSignal.timeout(config.timeoutMs ?? UPSTREAM_TIMEOUT_MS),
     });
   } catch {
     return jsonError(502, "BAD_GATEWAY", "The service is starting up. Please try again in a moment.");

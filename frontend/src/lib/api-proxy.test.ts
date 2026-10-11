@@ -1,7 +1,7 @@
 // @vitest-environment node
 import { afterEach, describe, expect, it, vi } from "vitest";
 
-import { proxyToApi, visitorIp, type ProxyConfig } from "@/lib/api-proxy";
+import { proxyConfigFromEnv, proxyToApi, visitorIp, type ProxyConfig } from "@/lib/api-proxy";
 
 const config: ProxyConfig = { apiBase: "https://api.internal", sharedSecret: "s".repeat(40), hopsFromRight: 1 };
 
@@ -97,5 +97,13 @@ describe("proxyToApi", () => {
     const response = await proxyToApi(new Request("https://x.test/api/v1/contact-messages", { method: "POST", body: "{}" }), config);
     expect(response.status).toBe(429);
     expect(response.headers.get("retry-after")).toBe("60");
+  });
+});
+
+describe("proxyConfigFromEnv timeout", () => {
+  it("defaults to 25 seconds and accepts a sane override", () => {
+    expect(proxyConfigFromEnv({}).timeoutMs).toBe(25_000);
+    expect(proxyConfigFromEnv({ API_PROXY_TIMEOUT_MS: "75000" }).timeoutMs).toBe(75_000);
+    expect(proxyConfigFromEnv({ API_PROXY_TIMEOUT_MS: "5000000" }).timeoutMs).toBe(25_000);
   });
 });

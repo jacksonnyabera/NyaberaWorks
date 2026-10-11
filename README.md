@@ -32,7 +32,7 @@ Open http://127.0.0.1:3000. Checks: `ruff check .` and `python -m pytest -q` in 
 
 ## Going live
 
-Two routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md)), or free-tier Google Cloud Run + Neon ([docs/12-go-live-cloud-run.md](docs/12-go-live-cloud-run.md)). Production files are in `deploy/`.
+Three routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md)), free-tier Google Cloud Run + Neon ([docs/12-go-live-cloud-run.md](docs/12-go-live-cloud-run.md)), or a temporary free launch on Render + Neon ([docs/13-go-live-render.md](docs/13-go-live-render.md)). Production files are in `deploy/`.
 
 ## Documentation
 
