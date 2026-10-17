@@ -15,7 +15,8 @@ ENV NEXT_PUBLIC_SITE_URL=${NEXT_PUBLIC_SITE_URL} \
     NEXT_TELEMETRY_DISABLED=1
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
-RUN npm run build
+# Git does not keep empty folders, so make sure public/ exists for the copy below.
+RUN mkdir -p public && npm run build
 
 FROM node:22-alpine AS run
 WORKDIR /app
