@@ -67,7 +67,7 @@ class QuoteRequest(LeadMixin, Base):
 
 
 class Booking(LeadMixin, Base):
-    __tablename__ = "bookings"
+    __tablename__ = "booking_requests"
 
     preferred_date: Mapped[date] = mapped_column(Date)
     preferred_time: Mapped[str] = mapped_column(String(40))
@@ -76,7 +76,7 @@ class Booking(LeadMixin, Base):
 
     __table_args__ = (
         CheckConstraint(_in_list("status", BOOKING_STATUSES), name="status_valid"),
-        Index("ix_bookings_status_preferred_date", "status", "preferred_date"),
-        Index("ix_bookings_email", "email"),
-        Index("ix_bookings_ip_hash_created_at", "ip_hash", "created_at"),
+        Index("ix_booking_requests_status_preferred_date", "status", "preferred_date"),
+        Index("ix_booking_requests_email", "email"),
+        Index("ix_booking_requests_ip_hash_created_at", "ip_hash", "created_at"),
     )

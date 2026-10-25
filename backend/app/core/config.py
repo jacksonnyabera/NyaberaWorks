@@ -62,6 +62,17 @@ class Settings(BaseSettings):
     # pause the server as soon as the reply is sent (Cloud Run).
     email_send_inline: bool = False
 
+    # Daraja STK Push configuration. Keep credentials in private environment variables.
+    daraja_environment: Literal["sandbox", "production"] = "sandbox"
+    daraja_consumer_key: str = ""
+    daraja_consumer_secret: str = ""
+    daraja_shortcode: str = ""
+    daraja_passkey: str = ""
+    daraja_callback_url: str = ""
+    daraja_transaction_type: Literal["CustomerPayBillOnline", "CustomerBuyGoodsOnline"] = (
+        "CustomerPayBillOnline"
+    )
+
     @property
     def cors_origins(self) -> list[str]:
         return [o.strip() for o in self.cors_allowed_origins.split(",") if o.strip()]
