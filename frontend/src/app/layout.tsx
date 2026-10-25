@@ -2,7 +2,9 @@ import type { Metadata, Viewport } from "next";
 import type { ReactNode } from "react";
 
 import { AuthProvider } from "@/components/auth/AuthProvider";
+import { Providers } from "@/components/providers";
 import { Footer } from "@/components/layout/Footer";
+import { WhatsAppButton } from "@/components/layout/WhatsAppButton";
 import { Header } from "@/components/layout/Header";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { site } from "@/lib/site";
@@ -19,7 +21,6 @@ export const metadata: Metadata = {
   applicationName: site.name,
   authors: [{ name: site.owner }],
   creator: site.owner,
-  alternates: { canonical: "/" },
   openGraph: {
     type: "website",
     siteName: site.name,
@@ -52,7 +53,7 @@ const organizationJsonLd = {
       url: site.url,
       description: site.description,
       email: site.email,
-      telephone: "+254798304161",
+      telephone: site.phoneE164,
       areaServed: "Kenya",
       address: { "@type": "PostalAddress", addressLocality: "Nairobi", addressCountry: "KE" },
       founder: { "@id": `${site.url}/#jackson` },
@@ -81,13 +82,16 @@ export default function RootLayout({ children }: { children: ReactNode }) {
     <html lang="en">
       <body className="flex min-h-screen flex-col">
         <JsonLd data={organizationJsonLd} />
-        <AuthProvider>
+        <Providers>
+          <AuthProvider>
           <Header />
           <main id="main" className="flex-1">
             {children}
           </main>
           <Footer />
+          <WhatsAppButton />
         </AuthProvider>
+        </Providers>
       </body>
     </html>
   );

@@ -5,7 +5,6 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 
 import { RequireAuth } from "@/components/auth/RequireAuth";
-import { Providers } from "@/components/providers";
 import { Container } from "@/components/ui/Section";
 import { cn } from "@/lib/cn";
 
@@ -23,7 +22,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   return (
     <RequireAuth role="ADMIN">
-      <Providers>
+      <>
         <div className="border-b border-line bg-paper">
           <Container>
             <p className="pt-10 text-sm font-semibold uppercase tracking-wide text-teal">Admin</p>
@@ -48,7 +47,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
           </Container>
         </div>
         <Container className="py-10 sm:py-14">{children}</Container>
-      </Providers>
+      </>
     </RequireAuth>
   );
 }

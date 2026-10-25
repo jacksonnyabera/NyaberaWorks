@@ -5,6 +5,7 @@ import { describe, expect, it, vi } from "vitest";
 
 import { ContactForm } from "@/components/forms/ContactForm";
 
+vi.mock("@/components/auth/AuthProvider", () => ({ useAuth: () => ({ status: "anonymous", user: null }) }));
 vi.mock("next/navigation", () => ({ useSearchParams: () => new URLSearchParams() }));
 
 function setup() {

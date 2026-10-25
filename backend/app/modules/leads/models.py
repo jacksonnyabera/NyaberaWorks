@@ -3,7 +3,7 @@
 import uuid
 from datetime import date, datetime
 
-from sqlalchemy import CheckConstraint, Date, DateTime, Index, String, Text, Uuid, func
+from sqlalchemy import CheckConstraint, Date, DateTime, ForeignKey, Index, String, Text, Uuid, func
 from sqlalchemy.orm import Mapped, mapped_column
 
 from app.core.db import Base
@@ -27,6 +27,10 @@ class LeadMixin:
     email: Mapped[str] = mapped_column(String(254))
     phone: Mapped[str | None] = mapped_column(String(25))
     service: Mapped[str] = mapped_column(String(80))
+    # Set when the visitor was signed in: that account can follow the request and reply.
+    user_id: Mapped[uuid.UUID | None] = mapped_column(
+        Uuid, ForeignKey("users.id", ondelete="SET NULL"), index=True
+    )
     # Keyed hash of the visitor's IP. Used only for spam limits, never shown.
     ip_hash: Mapped[str | None] = mapped_column(String(64))
     admin_notes: Mapped[str | None] = mapped_column(Text)
@@ -67,7 +71,7 @@ class QuoteRequest(LeadMixin, Base):
 
 
 class Booking(LeadMixin, Base):
-    __tablename__ = "booking_requests"
+    __tablename__ = "bookings"
 
     preferred_date: Mapped[date] = mapped_column(Date)
     preferred_time: Mapped[str] = mapped_column(String(40))
@@ -76,7 +80,7 @@ class Booking(LeadMixin, Base):
 
     __table_args__ = (
         CheckConstraint(_in_list("status", BOOKING_STATUSES), name="status_valid"),
-        Index("ix_booking_requests_status_preferred_date", "status", "preferred_date"),
-        Index("ix_booking_requests_email", "email"),
-        Index("ix_booking_requests_ip_hash_created_at", "ip_hash", "created_at"),
+        Index("ix_bookings_status_preferred_date", "status", "preferred_date"),
+        Index("ix_bookings_email", "email"),
+        Index("ix_bookings_ip_hash_created_at", "ip_hash", "created_at"),
     )

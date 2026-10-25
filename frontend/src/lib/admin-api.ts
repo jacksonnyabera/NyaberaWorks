@@ -13,6 +13,7 @@ export type LeadBase = {
   service: string;
   status: string;
   adminNotes: string | null;
+  userId: string | null;
   createdAt: string;
   updatedAt: string;
 };

@@ -21,6 +21,7 @@ const row = {
   service: "website-maintenance",
   status: "new",
   adminNotes: null,
+  userId: null,
   createdAt: "2026-10-09T07:00:00Z",
   updatedAt: "2026-10-09T07:00:00Z",
   message: "I need help keeping my website updated.",

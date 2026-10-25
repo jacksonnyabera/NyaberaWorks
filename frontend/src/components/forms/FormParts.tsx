@@ -7,6 +7,8 @@ import { Skeleton } from "@/components/ui/states";
 import type { ApiFailure } from "@/lib/api";
 import { site } from "@/lib/site";
 
+import { GuestNote } from "./GuestNote";
+
 export function ServerError({ failure }: { failure: ApiFailure }) {
   return (
     <Alert tone="error" title={failure.message}>
@@ -43,6 +45,9 @@ export function SubmitSuccess({
           Reference: <span className="font-semibold">{reference}</span>
         </p>
       ) : null}
+      <div className="mt-4">
+        <GuestNote after />
+      </div>
       <Button type="button" variant="secondary" className="mt-6" onClick={onReset}>
         {resetLabel}
       </Button>
@@ -64,12 +69,15 @@ export function FormSkeleton() {
 
 export function PrivacyNote() {
   return (
-    <p className="text-sm text-muted">
-      Your details are used only to reply to this request. See the{" "}
-      <Link className="underline" href="/privacy">
-        privacy policy
-      </Link>
-      .
-    </p>
+    <div className="space-y-2">
+      <p className="text-sm text-muted">
+        Your details are used only to reply to this request. See the{" "}
+        <Link className="underline" href="/privacy">
+          privacy policy
+        </Link>
+        .
+      </p>
+      <GuestNote />
+    </div>
   );
 }

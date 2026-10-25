@@ -41,3 +41,8 @@ Three routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md
 ## Secrets
 
 Never commit `.env` files. Templates: `.env.example` (development) and `deploy/.env.example` (production).
+
+
+## Replies and quotations (Batch J)
+
+Clients who are signed in when they send a contact, quote or booking request have it linked to their account. In `/account` they see each request, your replies and any quotation, can reply, and can accept or decline a quotation. In Admin, open a request to read the conversation, reply, and (for quote requests) send or withdraw a quotation. Requests sent as a guest cannot receive replies in the app; the admin panel says so. Migration `0004` adds the links and two tables and does not change existing data.

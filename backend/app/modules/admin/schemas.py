@@ -27,6 +27,7 @@ class LeadOutBase(CamelModel):
     service: str
     status: str
     admin_notes: str | None
+    user_id: uuid.UUID | None = None
     created_at: datetime
     updated_at: datetime
 

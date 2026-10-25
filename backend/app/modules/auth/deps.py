@@ -42,6 +42,21 @@ def get_current_user(
     return user
 
 
+def get_optional_user(
+    credentials: Annotated[HTTPAuthorizationCredentials | None, Depends(_bearer)],
+    db: Annotated[Session, Depends(get_db)],
+    settings: Annotated[Settings, Depends(get_settings)],
+) -> User | None:
+    """The signed-in user if there is a valid token, otherwise None (a guest).
+    Used by the public forms, which work with or without an account."""
+    if credentials is None:
+        return None
+    try:
+        return get_current_user(credentials, db, settings)
+    except AppError:
+        return None
+
+
 def require_admin(user: Annotated[User, Depends(get_current_user)]) -> User:
     if user.role != "ADMIN":
         raise AppError(403, "FORBIDDEN", "You do not have access to this area.")
@@ -75,4 +90,5 @@ def require_same_origin(
 
 
 CurrentUser = Annotated[User, Depends(get_current_user)]
+OptionalUser = Annotated[User | None, Depends(get_optional_user)]
 AdminUser = Annotated[User, Depends(require_admin)]

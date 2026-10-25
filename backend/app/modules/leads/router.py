@@ -7,6 +7,7 @@ from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.core.db import get_db
+from app.modules.auth.deps import OptionalUser
 from app.modules.leads import service
 from app.modules.leads.notify import notify_new_lead
 from app.modules.leads.schemas import BookingIn, ContactIn, LeadReceipt, QuoteIn
@@ -35,26 +36,41 @@ def _notify_if_real(
 
 @router.post("/contact-messages", status_code=201, response_model=LeadReceipt)
 def create_contact_message(
-    data: ContactIn, request: Request, db: Db, settings: Config, tasks: BackgroundTasks
+    data: ContactIn,
+    request: Request,
+    db: Db,
+    settings: Config,
+    tasks: BackgroundTasks,
+    user: OptionalUser,
 ) -> LeadReceipt:
-    receipt = service.save_contact(db, data, request, settings)
+    receipt = service.save_contact(db, data, request, settings, user)
     _notify_if_real(tasks, "C", data, receipt, settings)
     return receipt
 
 
 @router.post("/quote-requests", status_code=201, response_model=LeadReceipt)
 def create_quote_request(
-    data: QuoteIn, request: Request, db: Db, settings: Config, tasks: BackgroundTasks
+    data: QuoteIn,
+    request: Request,
+    db: Db,
+    settings: Config,
+    tasks: BackgroundTasks,
+    user: OptionalUser,
 ) -> LeadReceipt:
-    receipt = service.save_quote(db, data, request, settings)
+    receipt = service.save_quote(db, data, request, settings, user)
     _notify_if_real(tasks, "Q", data, receipt, settings)
     return receipt
 
 
 @router.post("/bookings", status_code=201, response_model=LeadReceipt)
 def create_booking(
-    data: BookingIn, request: Request, db: Db, settings: Config, tasks: BackgroundTasks
+    data: BookingIn,
+    request: Request,
+    db: Db,
+    settings: Config,
+    tasks: BackgroundTasks,
+    user: OptionalUser,
 ) -> LeadReceipt:
-    receipt = service.save_booking(db, data, request, settings)
+    receipt = service.save_booking(db, data, request, settings, user)
     _notify_if_real(tasks, "B", data, receipt, settings)
     return receipt

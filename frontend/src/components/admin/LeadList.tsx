@@ -4,6 +4,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState, type FormEvent } from "react";
 
 import { Pager } from "@/components/admin/Pager";
+import { AdminConversation } from "@/components/conversations/AdminConversation";
 import { SelectField, TextAreaField, TextField } from "@/components/forms/fields";
 import { Button } from "@/components/ui/Button";
 import { Alert, EmptyState, Skeleton } from "@/components/ui/states";
@@ -11,6 +12,7 @@ import { formatDateTime } from "@/lib/admin-lists";
 import { listCatalog, listLeads, updateLead, type LeadBase, type LeadKind } from "@/lib/admin-api";
 import { toApiFailure } from "@/lib/api";
 import { cn } from "@/lib/cn";
+import { kindFromAdminPath } from "@/lib/conversations-api";
 
 export type LeadConfig<T extends LeadBase> = {
   kind: LeadKind;
@@ -46,6 +48,7 @@ function LeadRow<T extends LeadBase>({
   serviceName: string;
 }) {
   const queryClient = useQueryClient();
+  const [opened, setOpened] = useState(false);
   const [status, setStatus] = useState(row.status);
   const [notes, setNotes] = useState(row.adminNotes ?? "");
   const save = useMutation({
@@ -68,10 +71,11 @@ function LeadRow<T extends LeadBase>({
 
   return (
     <li className="rounded-card border border-line bg-white">
-      <details className="group">
+      <details className="group" onToggle={(e) => e.currentTarget.open && setOpened(true)}>
         <summary className="flex cursor-pointer list-none flex-wrap items-center gap-x-4 gap-y-2 p-4 sm:px-5">
           <span className="font-mono text-sm text-muted">{row.reference}</span>
           <span className="font-semibold">{row.name}</span>
+          {row.userId ? <span className="rounded-full bg-teal-tint px-2 py-0.5 text-xs text-teal-deep">account</span> : null}
           <span className="text-muted">{serviceName}</span>
           <span className="ml-auto flex items-center gap-3">
             <span className="text-sm text-muted">{formatDateTime(row.createdAt)}</span>
@@ -125,6 +129,7 @@ function LeadRow<T extends LeadBase>({
             {save.isSuccess && !dirty ? <span className="text-teal-deep">Saved.</span> : null}
             {save.isError ? <span className="text-danger">{toApiFailure(save.error).message}</span> : null}
           </div>
+          {opened ? <AdminConversation kind={kindFromAdminPath(config.kind)} id={row.id} /> : null}
         </div>
       </details>
     </li>

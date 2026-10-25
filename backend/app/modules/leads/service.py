@@ -17,6 +17,7 @@ from app.core.errors import AppError
 from app.modules.catalog.service import is_valid_service_choice
 from app.modules.leads.models import Booking, ContactMessage, QuoteRequest
 from app.modules.leads.schemas import BookingIn, ContactIn, LeadReceipt, QuoteIn
+from app.modules.users.models import User
 
 logger = logging.getLogger("app.leads")
 
@@ -92,7 +93,13 @@ def _save(db: Session, model_cls, kind: str, values: dict) -> LeadReceipt:  # no
     raise AppError(500, "INTERNAL_ERROR", "Could not save your request. Please try again.")
 
 
-def save_contact(db: Session, data: ContactIn, request: Request, settings: Settings) -> LeadReceipt:
+def save_contact(
+    db: Session,
+    data: ContactIn,
+    request: Request,
+    settings: Settings,
+    user: User | None = None,
+) -> LeadReceipt:
     if data.website:
         return _fake_receipt("C")
     check_service(db, data.service)
@@ -109,11 +116,18 @@ def save_contact(db: Session, data: ContactIn, request: Request, settings: Setti
             "service": data.service,
             "message": data.message,
             "ip_hash": ip_hash,
+            "user_id": user.id if user else None,
         },
     )
 
 
-def save_quote(db: Session, data: QuoteIn, request: Request, settings: Settings) -> LeadReceipt:
+def save_quote(
+    db: Session,
+    data: QuoteIn,
+    request: Request,
+    settings: Settings,
+    user: User | None = None,
+) -> LeadReceipt:
     if data.website:
         return _fake_receipt("Q")
     check_service(db, data.service)
@@ -132,11 +146,18 @@ def save_quote(db: Session, data: QuoteIn, request: Request, settings: Settings)
             "deadline": data.deadline,
             "description": data.description,
             "ip_hash": ip_hash,
+            "user_id": user.id if user else None,
         },
     )
 
 
-def save_booking(db: Session, data: BookingIn, request: Request, settings: Settings) -> LeadReceipt:
+def save_booking(
+    db: Session,
+    data: BookingIn,
+    request: Request,
+    settings: Settings,
+    user: User | None = None,
+) -> LeadReceipt:
     if data.website:
         return _fake_receipt("B")
     check_service(db, data.service)
@@ -155,5 +176,6 @@ def save_booking(db: Session, data: BookingIn, request: Request, settings: Setti
             "preferred_time": data.preferred_time,
             "requirements": data.requirements,
             "ip_hash": ip_hash,
+            "user_id": user.id if user else None,
         },
     )
