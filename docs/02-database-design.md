@@ -1,5 +1,7 @@
 # 02 — Database Design
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). PostgreSQL. No migrations exist yet.
 
 ## 1. Conventions

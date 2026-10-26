@@ -302,4 +302,4 @@ Database changes are applied automatically by the `migrate` step. If a new versi
 
 ## 18. Not part of this launch
 
-Online payments (M-Pesa, cards, crypto), orders and invoices, reviews, password reset by email and email verification are designed (see docs 02 and 07) but not built. Until password reset exists, a client who forgets their password needs you to help them directly.
+Password reset by email and admin two-factor are built; reset emails need SMTP set up. Online payments (partly built, not live), orders and invoices, reviews and email verification are designed (see docs 02, 07 and 15) but not finished.

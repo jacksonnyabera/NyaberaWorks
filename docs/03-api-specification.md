@@ -1,5 +1,7 @@
 # 03 — API Specification (Design Only)
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). Nothing is implemented.
 
 Deployment contract: the API is served on the same domain as the site under `/api/*` (path forwarded unchanged by Caddy). Interactive docs are at `/api/docs`, the OpenAPI schema at `/api/openapi.json` (the frontend generates its TypeScript types from it), and an unversioned health check at `/api/health`. Money fields carry `currency` (KES or USD); a single document never mixes currencies. FastAPI is the only business/API backend; Next.js calls only the public, unauthenticated endpoints on the server and calls everything else from the browser.

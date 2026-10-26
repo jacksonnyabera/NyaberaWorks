@@ -1,6 +1,6 @@
 # 07 — Payment Architecture
 
-Status: APPROVED, architecture locked v1.0 (2026-10-05). No payment code exists. Provider-specific details must be re-confirmed against current provider docs when Phase 9 starts.
+Status: APPROVED, architecture locked v1.0 (2026-10-05). Partly built: a ledger, an admin-only intent endpoint and Daraja STK push exist but have not run live and there is no client checkout (see [15-as-built-status.md](15-as-built-status.md)). Provider-specific details must be re-confirmed against current provider docs when Phase 9 starts.
 
 ## 1. Design goals
 

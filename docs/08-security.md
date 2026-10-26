@@ -1,5 +1,7 @@
 # 08 — Security
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). Security is a design input to every phase, not a final step.
 
 ## 1. Threat model summary

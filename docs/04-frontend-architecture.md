@@ -1,5 +1,7 @@
 # 04 — Frontend Architecture
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). No application code exists yet.
 
 ## 1. Stack

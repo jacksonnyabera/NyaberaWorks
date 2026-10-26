@@ -1,5 +1,7 @@
 # 10 — Deployment
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 > **Implementation note (Batch E).** The files in `deploy/` are the working version of this design: containers `caddy`, `web`, `api`, `db` and a one-shot `migrate` step; no separate worker yet (email is sent from the API after the response). The step-by-step launch procedure is in [11 — Going live](11-go-live.md).
 
 Status: APPROVED, architecture locked v1.0 (2026-10-05). Costs are rough and must be re-checked at provisioning time.

@@ -1,5 +1,7 @@
 # 09 — Development Roadmap
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05); Phase 1 plan awaiting approval. Durations assume one developer working part-time alongside studies; adjust to reality. Each phase ends with a demo, passing tests, and updated docs. Do not start a phase until its dependencies are done.
 
 ## Overview

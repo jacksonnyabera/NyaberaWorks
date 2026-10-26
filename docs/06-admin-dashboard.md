@@ -1,5 +1,7 @@
 # 06 — Admin Dashboard
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). The admin console is a client-side-only, non-indexed area of the same Next.js app (`/admin/*`), backed by `/api/v1/admin/*`. All authorization is enforced by FastAPI; the admin pages fetch data in the browser.
 
 ## 1. Principles

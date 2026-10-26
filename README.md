@@ -2,8 +2,9 @@
 
 Technology, Automation & Biomedical Engineering Solutions. The website and client platform of Jackson Nyabera, Nairobi.
 
-**What works today:** public website (home, about, services, portfolio, FAQ, legal pages), quote, booking and contact forms saved to a database, client accounts, an admin area (messages, quotes, bookings, clients, services, portfolio), email alerts to the owner, SEO basics (metadata, structured data, sitemap), and a Docker deployment.
-**Not built yet:** online payments, orders and invoices, reviews, password reset by email. See `docs/`.
+**What works today:** public website (home, about, services, portfolio, FAQ, legal pages), quote, booking and contact forms saved to a database, client accounts with password reset by email link, an admin area (messages, quotes, bookings, clients, services, portfolio) with optional two-factor sign-in, replies and quotations inside the client account, email alerts to the owner, a WhatsApp chat button, and SEO basics (metadata, structured data, sitemap).
+**Partly built:** M-Pesa payments (ledger, admin-only intent, Daraja STK push; not live, no client checkout yet).
+**Not built yet:** email verification, orders and invoices, reviews, card and crypto payments. See `docs/15-as-built-status.md`.
 
 ## Stack
 
@@ -32,17 +33,21 @@ Open http://127.0.0.1:3000. Checks: `ruff check .` and `python -m pytest -q` in 
 
 ## Going live
 
-Three routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md)), free-tier Google Cloud Run + Neon ([docs/12-go-live-cloud-run.md](docs/12-go-live-cloud-run.md)), a temporary free launch on Render + Neon ([docs/13-go-live-render.md](docs/13-go-live-render.md)), or website on Vercel with the API on Render ([docs/14-go-live-vercel-render.md](docs/14-go-live-vercel-render.md)). Production files are in `deploy/`.
+Routes: a paid server with Docker ([docs/11-go-live.md](docs/11-go-live.md)), free-tier Google Cloud Run + Neon ([docs/12-go-live-cloud-run.md](docs/12-go-live-cloud-run.md)), a temporary free launch on Render + Neon ([docs/13-go-live-render.md](docs/13-go-live-render.md)), or website on Vercel with the API on Render ([docs/14-go-live-vercel-render.md](docs/14-go-live-vercel-render.md)). Production files are in `deploy/`.
 
 ## Documentation
 
-`PROJECT_SPEC.md` and `docs/01`–`12` (architecture, database, API, frontend, flows, admin, payments, security, roadmap, deployment, go-live, go-live on Cloud Run).
+`PROJECT_SPEC.md` and `docs/01`–`14` (architecture, database, API, frontend, flows, admin, payments, security, roadmap, deployment, go-live routes). Docs 01–10 are the target design; **`docs/15-as-built-status.md` says what exists today.**
 
 ## Secrets
 
 Never commit `.env` files. Templates: `.env.example` (development) and `deploy/.env.example` (production).
 
 
-## Replies and quotations (Batch J)
+## Replies and quotations
 
 Clients who are signed in when they send a contact, quote or booking request have it linked to their account. In `/account` they see each request, your replies and any quotation, can reply, and can accept or decline a quotation. In Admin, open a request to read the conversation, reply, and (for quote requests) send or withdraw a quotation. Requests sent as a guest cannot receive replies in the app; the admin panel says so. Migration `0004` adds the links and two tables and does not change existing data.
+
+## Account safety
+
+Forgot-password sends a 30-minute single-use link (needs SMTP: `EMAIL_BACKEND=smtp`, `SMTP_*`, `EMAIL_FROM`, `SITE_URL`). The admin can turn on two-factor sign-in in `/account`; recovery codes are shown once. If the phone and codes are lost: `python -m app.cli.reset_2fa --email you@example.com` in `backend`. Migration `0005` adds the reset-token table and two-factor columns.

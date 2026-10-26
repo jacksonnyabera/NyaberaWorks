@@ -1,5 +1,7 @@
 # 05 — User Flows
 
+> **As built:** this page is the target design. For what exists today, see [15-as-built-status.md](15-as-built-status.md).
+
 Status: APPROVED, architecture locked v1.0 (2026-10-05). Each flow lists steps, system actions, failure paths, and notifications. Pages in these flows that are not public (booking, checkout, account, admin) run client-side; all data and decisions come from FastAPI.
 
 ## Roles
