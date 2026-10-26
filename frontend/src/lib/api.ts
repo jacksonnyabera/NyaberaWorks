@@ -56,6 +56,11 @@ export const endpoints = {
   logout: "/v1/auth/logout",
   me: "/v1/auth/me",
   changePassword: "/v1/auth/change-password",
+  forgotPassword: "/v1/auth/forgot-password",
+  resetPassword: "/v1/auth/reset-password",
+  twoFactorSetup: "/v1/auth/2fa/setup",
+  twoFactorEnable: "/v1/auth/2fa/enable",
+  twoFactorDisable: "/v1/auth/2fa/disable",
   adminOverview: "/v1/admin/overview",
 } as const;
 
@@ -64,6 +69,8 @@ export type FieldErrors = Record<string, string>;
 export type ApiFailure = {
   kind: "validation" | "server" | "network" | "rate-limit" | "auth" | "conflict";
   message: string;
+  /** The server's machine-readable error code, when it sent one (for example TOTP_REQUIRED). */
+  code?: string;
   fieldErrors: FieldErrors;
   requestId?: string;
 };
@@ -111,6 +118,7 @@ export function toApiFailure(error: unknown): ApiFailure {
         kind: "validation",
         message: serverMessage ?? "Some details need fixing. Check the highlighted fields.",
         fieldErrors,
+        code: body.error?.code,
         requestId,
       };
     }
@@ -119,6 +127,7 @@ export function toApiFailure(error: unknown): ApiFailure {
         kind: "conflict",
         message: serverMessage ?? "That already exists.",
         fieldErrors,
+        code: body.error?.code,
         requestId,
       };
     }
@@ -127,6 +136,7 @@ export function toApiFailure(error: unknown): ApiFailure {
         kind: "auth",
         message: serverMessage ?? "You need to sign in to do that.",
         fieldErrors: {},
+        code: body.error?.code,
         requestId,
       };
     }
@@ -135,6 +145,7 @@ export function toApiFailure(error: unknown): ApiFailure {
         kind: "rate-limit",
         message: serverMessage ?? "Too many attempts. Wait a minute and try again.",
         fieldErrors: {},
+        code: body.error?.code,
         requestId,
       };
     }
@@ -142,6 +153,7 @@ export function toApiFailure(error: unknown): ApiFailure {
       kind: "server",
       message: "Something went wrong on our side. Please try again.",
       fieldErrors: {},
+      code: body.error?.code,
       requestId,
     };
   }

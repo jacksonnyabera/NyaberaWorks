@@ -6,6 +6,7 @@ export type User = {
   email: string;
   phone: string | null;
   role: Role;
+  totpEnabled: boolean;
   createdAt: string;
 };
 
@@ -14,6 +15,11 @@ export type SessionResponse = {
   tokenType: "bearer";
   expiresIn: number;
   user: User;
+};
+
+export type TwoFactorSetup = {
+  secret: string;
+  otpauthUri: string;
 };
 
 export type AdminOverview = {

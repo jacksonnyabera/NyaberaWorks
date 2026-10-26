@@ -3,21 +3,28 @@
 from datetime import UTC, datetime
 from typing import Annotated
 
-from fastapi import APIRouter, Cookie, Depends, Request, Response
+from fastapi import APIRouter, BackgroundTasks, Cookie, Depends, Request, Response
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
 from app.core.config import Settings, get_settings
 from app.core.db import get_db
+from app.core.email import send_email
 from app.core.errors import AppError, error_response
 from app.modules.auth import service
-from app.modules.auth.deps import CurrentUser, require_same_origin
+from app.modules.auth.deps import AdminUser, CurrentUser, require_same_origin
 from app.modules.auth.schemas import (
     ChangePasswordIn,
+    ForgotPasswordIn,
     LoginIn,
     ProfileIn,
     RegisterIn,
+    ResetPasswordIn,
     SessionOut,
+    TotpDisableIn,
+    TotpEnabledOut,
+    TotpEnableIn,
+    TotpSetupOut,
     UserOut,
 )
 
@@ -133,3 +140,50 @@ def change_password(
     issued = service.change_password(db, user, data, request, settings)
     _set_cookies(response, issued, settings)
     return _session_out(issued)
+
+
+@router.post("/forgot-password", status_code=202)
+def forgot_password(
+    data: ForgotPasswordIn, request: Request, db: Db, settings: Config, tasks: BackgroundTasks
+) -> dict[str, str]:
+    # The same answer whether or not the address has an account.
+    mail = service.request_password_reset(db, data, request, settings)
+    if mail:
+        to, subject, body = mail
+        if settings.email_send_inline:
+            send_email(settings, to=to, subject=subject, body=body)
+        else:
+            tasks.add_task(send_email, settings, to=to, subject=subject, body=body)
+    return {"status": "If that address has an account, a reset link is on its way."}
+
+
+@router.post("/reset-password", status_code=204)
+def reset_password(data: ResetPasswordIn, db: Db) -> Response:
+    service.reset_password(db, data)
+    response = Response(status_code=204)
+    response.headers["Cache-Control"] = "no-store"
+    return response
+
+
+# Two-factor sign-in for the owner's account. Clients do not need it.
+
+
+@router.post("/2fa/setup", response_model=TotpSetupOut)
+def two_factor_setup(user: AdminUser, db: Db, response: Response) -> TotpSetupOut:
+    response.headers["Cache-Control"] = "no-store"
+    secret, uri = service.totp_setup(db, user)
+    return TotpSetupOut(secret=secret, otpauth_uri=uri)
+
+
+@router.post("/2fa/enable", response_model=TotpEnabledOut)
+def two_factor_enable(
+    data: TotpEnableIn, user: AdminUser, db: Db, response: Response
+) -> TotpEnabledOut:
+    response.headers["Cache-Control"] = "no-store"
+    return TotpEnabledOut(recovery_codes=service.totp_enable(db, user, data.code))
+
+
+@router.post("/2fa/disable", status_code=204)
+def two_factor_disable(data: TotpDisableIn, user: AdminUser, db: Db) -> Response:
+    service.totp_disable(db, user, data.password, data.code)
+    return Response(status_code=204)

@@ -12,7 +12,7 @@ vi.mock("next/navigation", () => ({
 let auth: { status: string; user: unknown; loggedOut?: boolean } = { status: "loading", user: null };
 vi.mock("@/components/auth/AuthProvider", () => ({ useAuth: () => auth }));
 
-const client = { id: "1", name: "A", email: "a@b.co", phone: null, role: "CLIENT", createdAt: "" };
+const client = { id: "1", name: "A", email: "a@b.co", phone: null, role: "CLIENT", totpEnabled: false, createdAt: "" };
 const admin = { ...client, role: "ADMIN" };
 
 beforeEach(() => replace.mockClear());

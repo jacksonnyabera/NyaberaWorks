@@ -13,7 +13,7 @@ type AuthContextValue = {
   user: User | null;
   /** True after the person chose to log out, so pages send them home rather than to the login form. */
   loggedOut: boolean;
-  login: (values: { email: string; password: string }) => Promise<User>;
+  login: (values: { email: string; password: string; totpCode?: string }) => Promise<User>;
   register: (values: { name: string; email: string; phone: string; password: string }) => Promise<User>;
   logout: () => Promise<void>;
   setUser: (user: User) => void;
@@ -40,7 +40,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     };
   }, []);
 
-  const login = useCallback(async (values: { email: string; password: string }) => {
+  const login = useCallback(async (values: { email: string; password: string; totpCode?: string }) => {
     const signedIn = await signIn(values);
     setUser(signedIn);
     setLoggedOut(false);

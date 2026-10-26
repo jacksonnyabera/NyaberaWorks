@@ -118,9 +118,46 @@ class RegisterIn(CamelModel):
         return check_password_strength(value, info.data.get("email"))
 
 
+Code = Annotated[str, StringConstraints(strip_whitespace=True, min_length=6, max_length=20)]
+
+
 class LoginIn(CamelModel):
     email: Email
     password: Annotated[str, StringConstraints(min_length=1, max_length=MAX_PASSWORD)]
+    # Only needed for accounts that turned on two-factor sign-in.
+    totp_code: Code | None = None
+
+
+class ForgotPasswordIn(CamelModel):
+    email: Email
+
+    @field_validator("email", mode="after")
+    @classmethod
+    def _lower_email(cls, value: str) -> str:
+        return value.lower()
+
+
+class ResetPasswordIn(CamelModel):
+    token: Annotated[str, StringConstraints(min_length=20, max_length=200)]
+    new_password: Password
+
+
+class TotpEnableIn(CamelModel):
+    code: Code
+
+
+class TotpDisableIn(CamelModel):
+    password: Annotated[str, StringConstraints(min_length=1, max_length=MAX_PASSWORD)]
+    code: Code
+
+
+class TotpSetupOut(CamelModel):
+    secret: str
+    otpauth_uri: str
+
+
+class TotpEnabledOut(CamelModel):
+    recovery_codes: list[str]
 
 
 class ProfileIn(CamelModel):
@@ -146,6 +183,7 @@ class UserOut(CamelModel):
     email: str
     phone: str | None
     role: Literal["CLIENT", "ADMIN"]
+    totp_enabled: bool = False
     created_at: datetime
 
 

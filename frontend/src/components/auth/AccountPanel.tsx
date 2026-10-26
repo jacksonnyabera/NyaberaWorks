@@ -18,6 +18,7 @@ import {
 import type { User } from "@/lib/auth-types";
 
 import { useAuth } from "./AuthProvider";
+import { TwoFactorPanel } from "./TwoFactorPanel";
 import { failureToForm } from "./formHelpers";
 
 function ProfileForm({ user }: { user: User }) {
@@ -152,6 +153,16 @@ export function AccountPanel({ user }: { user: User }) {
             <PasswordForm />
           </div>
         </section>
+        {user.role === "ADMIN" ? (
+          <section aria-labelledby="twofactor-title">
+            <h2 id="twofactor-title" className="text-2xl">
+              Two-factor sign-in
+            </h2>
+            <div className="mt-6">
+              <TwoFactorPanel user={user} />
+            </div>
+          </section>
+        ) : null}
       </div>
       <aside aria-label="Next steps" className="space-y-6">
         <div className="rounded-card border border-line bg-white p-6">

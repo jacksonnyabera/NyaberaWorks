@@ -21,6 +21,8 @@ export function LoginForm() {
   const router = useRouter();
   const next = safeNext(useSearchParams().get("next"));
   const [failure, setFailure] = useState<ApiFailure | null>(null);
+  // Set when the account has two-factor sign-in and the password was right.
+  const [needsCode, setNeedsCode] = useState(false);
   const {
     register,
     handleSubmit,
@@ -42,7 +44,12 @@ export function LoginForm() {
       const signedIn = await login(values);
       router.replace(next ?? homeFor(signedIn.role));
     } catch (error) {
-      setFailure(failureToForm(error, setError, ["email", "password"]));
+      const result = failureToForm(error, setError, ["email", "password"]);
+      if (result.code === "TOTP_REQUIRED") {
+        setNeedsCode(true);
+        return;
+      }
+      setFailure(result);
     }
   }
 
@@ -62,12 +69,30 @@ export function LoginForm() {
         type="password"
         autoComplete="current-password"
         error={errors.password?.message}
+        readOnly={needsCode}
         {...register("password")}
       />
+      {needsCode ? (
+        <TextField
+          id="login-code"
+          label="Authenticator code"
+          inputMode="numeric"
+          autoComplete="one-time-code"
+          autoFocus
+          hint="The 6 digits from your authenticator app. Lost your phone? Use one of your recovery codes instead."
+          error={errors.totpCode?.message}
+          {...register("totpCode")}
+        />
+      ) : null}
       {failure ? <Alert tone="error" title={failure.message} /> : null}
       <Button type="submit" size="lg" disabled={isSubmitting} className="w-full sm:w-auto">
         {isSubmitting ? "Signing in..." : "Log in"}
       </Button>
+      <p className="text-muted">
+        <Link className="font-semibold text-teal underline-offset-4 hover:underline" href="/forgot-password">
+          Forgot your password?
+        </Link>
+      </p>
       <p className="text-muted">
         New here?{" "}
         <Link className="font-semibold text-teal underline-offset-4 hover:underline" href={next ? `/register?next=${encodeURIComponent(next)}` : "/register"}>

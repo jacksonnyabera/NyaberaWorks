@@ -24,7 +24,7 @@ describe("AccountLinks", () => {
     expect(screen.queryByRole("link", { name: /admin/i })).not.toBeInTheDocument();
   });
   it("does not show an Admin link even when the signed-in user is the admin", () => {
-    auth = { status: "authenticated", user: { id: "1", name: "Owner", email: "o@x.co", phone: null, role: "ADMIN", createdAt: "" } };
+    auth = { status: "authenticated", user: { id: "1", name: "Owner", email: "o@x.co", phone: null, role: "ADMIN", totpEnabled: false, createdAt: "" } };
     show();
     expect(screen.getByRole("link", { name: "Account" })).toBeInTheDocument();
     expect(screen.queryByRole("link", { name: /admin/i })).not.toBeInTheDocument();

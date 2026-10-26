@@ -15,9 +15,36 @@ const newPassword = z
   .min(10, "Use at least 10 characters")
   .max(128, "Use at most 128 characters");
 
+const secondStep = z.string().trim().max(32, "That code is too long");
+
 export const loginSchema = z.object({
   email,
   password: z.string().min(1, "Enter your password"),
+  totpCode: secondStep.optional(),
+});
+
+export const forgotPasswordSchema = z.object({ email });
+
+export const resetPasswordSchema = z
+  .object({
+    newPassword,
+    confirmPassword: z.string().min(1, "Repeat the new password"),
+  })
+  .refine((v) => v.newPassword === v.confirmPassword, {
+    path: ["confirmPassword"],
+    message: "The passwords do not match",
+  });
+
+export const sixDigitCode = z
+  .string()
+  .trim()
+  .regex(/^[0-9]{6}$/, "Enter the 6 digits from your authenticator app");
+
+export const enableTwoFactorSchema = z.object({ code: sixDigitCode });
+
+export const disableTwoFactorSchema = z.object({
+  password: z.string().min(1, "Enter your password"),
+  code: secondStep.min(6, "Enter a code from your app or a recovery code"),
 });
 
 export const registerSchema = z
@@ -41,6 +68,10 @@ export const changePasswordSchema = z
   });
 
 export type LoginValues = z.infer<typeof loginSchema>;
+export type ForgotPasswordValues = z.infer<typeof forgotPasswordSchema>;
+export type ResetPasswordValues = z.infer<typeof resetPasswordSchema>;
+export type EnableTwoFactorValues = z.infer<typeof enableTwoFactorSchema>;
+export type DisableTwoFactorValues = z.infer<typeof disableTwoFactorSchema>;
 export type RegisterValues = z.infer<typeof registerSchema>;
 export type ProfileValues = z.infer<typeof profileSchema>;
 export type ChangePasswordValues = z.infer<typeof changePasswordSchema>;
