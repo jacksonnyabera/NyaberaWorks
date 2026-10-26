@@ -16,7 +16,7 @@ export function TrustStrip() {
         <dl className="grid grid-cols-2 gap-x-6 gap-y-5 py-6 lg:grid-cols-4">
           {facts.map((f) => (
             <div key={f.label}>
-              <dt className="text-xs font-semibold uppercase tracking-wide text-muted">{f.label}</dt>
+              <dt className="text-sm text-muted">{f.label}</dt>
               <dd className="mt-1 font-display text-base font-semibold sm:text-lg">{f.value}</dd>
             </div>
           ))}

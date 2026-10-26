@@ -2,6 +2,7 @@ import Link from "next/link";
 
 import { CtaBand } from "@/components/home/CtaBand";
 import { FaqList } from "@/components/home/FaqList";
+import { EngineeringRecord } from "@/components/home/EngineeringRecord";
 import { HeartbeatTrace } from "@/components/home/HeartbeatTrace";
 import { ServiceIcon } from "@/components/home/ServiceIcon";
 import { TrustStrip } from "@/components/home/TrustStrip";
@@ -204,6 +205,11 @@ export default async function HomePage() {
             </div>
           ))}
         </div>
+      </Section>
+
+      {/* How the work is checked */}
+      <Section labelledBy="craft-title">
+        <EngineeringRecord />
       </Section>
 
       {/* Biomedical positioning */}
