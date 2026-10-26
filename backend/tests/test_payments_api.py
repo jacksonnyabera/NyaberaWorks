@@ -218,6 +218,7 @@ def test_callback_amount_mismatch_never_marks_payment_successful(client, monkeyp
     assert status_response.json()["status"] == "PROCESSING"
     assert status_response.json()["needs_review"] is True
 
+
 def _prepare_stk_verification_case(client, monkeypatch, key, *, send_callback=True):
     import app.modules.payments.router as payments_router_module
 
@@ -344,9 +345,7 @@ def test_stk_query_provider_error_does_not_mark_payment_successful(client, monke
     import app.modules.payments.router as payments_router_module
     from app.modules.payments.daraja import DarajaError
 
-    created, _, _ = _prepare_stk_verification_case(
-        client, monkeypatch, "payment-verify-error-0004"
-    )
+    created, _, _ = _prepare_stk_verification_case(client, monkeypatch, "payment-verify-error-0004")
 
     def fail_query(**kwargs):
         raise DarajaError("Provider unavailable")

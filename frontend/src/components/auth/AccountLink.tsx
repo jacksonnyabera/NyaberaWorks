@@ -8,7 +8,10 @@ import { getUnread } from "@/lib/conversations-api";
 
 import { useAuth } from "./AuthProvider";
 
-/** "Log in" for visitors, "Account" (and "Admin") once signed in. Used in the header. */
+/**
+ * "Log in" for visitors, "Account" once signed in. There is deliberately no public
+ * link to the admin area: the owner goes to /admin directly (or signs in and is sent there).
+ */
 export function AccountLinks({ className, linkClassName }: { className?: string; linkClassName?: string }) {
   const { status, user } = useAuth();
   const unread = useQuery({
@@ -30,11 +33,6 @@ export function AccountLinks({ className, linkClassName }: { className?: string;
   }
   return (
     <span className={cn("flex items-center gap-6", className)}>
-      {user.role === "ADMIN" ? (
-        <Link href="/admin" className={linkClassName}>
-          Admin
-        </Link>
-      ) : null}
       <Link href="/account" className={linkClassName}>
         Account
         {unread.data ? (

@@ -34,7 +34,7 @@ def test_upgrade_then_downgrade_round_trip():
     assert {
         "contact_messages",
         "quote_requests",
-        "bookings",
+        "booking_requests",
         "users",
         "refresh_tokens",
         "auth_events",

@@ -24,18 +24,13 @@ def upgrade() -> None:
         "ALTER TABLE booking_requests RENAME CONSTRAINT "
         "ck_bookings_status_valid TO ck_booking_requests_status_valid"
     )
-    op.execute(
-        "ALTER TABLE booking_requests RENAME CONSTRAINT "
-        "pk_bookings TO pk_booking_requests"
-    )
+    op.execute("ALTER TABLE booking_requests RENAME CONSTRAINT pk_bookings TO pk_booking_requests")
     op.execute(
         "ALTER TABLE booking_requests RENAME CONSTRAINT "
         "uq_bookings_reference TO uq_booking_requests_reference"
     )
 
-    op.execute(
-        "ALTER INDEX ix_bookings_email RENAME TO ix_booking_requests_email"
-    )
+    op.execute("ALTER INDEX ix_bookings_email RENAME TO ix_booking_requests_email")
     op.execute(
         "ALTER INDEX ix_bookings_ip_hash_created_at "
         "RENAME TO ix_booking_requests_ip_hash_created_at"
@@ -136,9 +131,7 @@ def upgrade() -> None:
             name=op.f("fk_payment_transactions_payment_id_payments"),
             ondelete="RESTRICT",
         ),
-        sa.PrimaryKeyConstraint(
-            "id", name=op.f("pk_payment_transactions")
-        ),
+        sa.PrimaryKeyConstraint("id", name=op.f("pk_payment_transactions")),
     )
     op.create_index(
         op.f("ix_payment_transactions_payment_id"),
@@ -172,9 +165,7 @@ def downgrade() -> None:
     op.drop_table("payments")
 
     # Restore the original booking table name and object names.
-    op.execute(
-        "ALTER INDEX ix_booking_requests_email RENAME TO ix_bookings_email"
-    )
+    op.execute("ALTER INDEX ix_booking_requests_email RENAME TO ix_bookings_email")
     op.execute(
         "ALTER INDEX ix_booking_requests_ip_hash_created_at "
         "RENAME TO ix_bookings_ip_hash_created_at"
@@ -188,10 +179,7 @@ def downgrade() -> None:
         "ALTER TABLE booking_requests RENAME CONSTRAINT "
         "ck_booking_requests_status_valid TO ck_bookings_status_valid"
     )
-    op.execute(
-        "ALTER TABLE booking_requests RENAME CONSTRAINT "
-        "pk_booking_requests TO pk_bookings"
-    )
+    op.execute("ALTER TABLE booking_requests RENAME CONSTRAINT pk_booking_requests TO pk_bookings")
     op.execute(
         "ALTER TABLE booking_requests RENAME CONSTRAINT "
         "uq_booking_requests_reference TO uq_bookings_reference"

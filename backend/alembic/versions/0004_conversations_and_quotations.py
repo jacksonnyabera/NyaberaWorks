@@ -1,7 +1,7 @@
 """link requests to accounts; add conversation messages and quotations
 
 Revision ID: 0004
-Revises: 0003
+Revises: cb0548d94dfc
 Create Date: 2026-10-18 09:00:00.000000
 """
 
@@ -11,11 +11,11 @@ import sqlalchemy as sa
 from alembic import op
 
 revision: str = "0004"
-down_revision: str | None = "0003"
+down_revision: str | None = "cb0548d94dfc"
 branch_labels: str | Sequence[str] | None = None
 depends_on: str | Sequence[str] | None = None
 
-LEAD_TABLES = ("contact_messages", "quote_requests", "bookings")
+LEAD_TABLES = ("contact_messages", "quote_requests", "booking_requests")
 
 
 def upgrade() -> None:
