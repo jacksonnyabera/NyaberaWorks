@@ -23,7 +23,7 @@ export function WhatsAppButton() {
         <path d="M21 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20.5l1.7-5.4A8.4 8.4 0 1 1 21 11.5Z" />
         <path d="M9 9.5c.3 2 2 3.8 4.2 4.6l1.4-1.3-1.9-1-.9.7a4.3 4.3 0 0 1-1.6-1.6l.7-.9-1-1.9L9 9.5Z" fill="currentColor" stroke="none" />
       </svg>
-      <span className="hidden text-[0.95rem] font-semibold sm:inline">WhatsApp</span>
+      <span className="text-[0.95rem] font-semibold">WhatsApp</span>
     </a>
   );
 }

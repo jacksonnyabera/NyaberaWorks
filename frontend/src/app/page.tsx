@@ -3,6 +3,8 @@ import Link from "next/link";
 import { CtaBand } from "@/components/home/CtaBand";
 import { FaqList } from "@/components/home/FaqList";
 import { HeartbeatTrace } from "@/components/home/HeartbeatTrace";
+import { ServiceIcon } from "@/components/home/ServiceIcon";
+import { TrustStrip } from "@/components/home/TrustStrip";
 import { ProjectPanel } from "@/components/portfolio/ProjectPanel";
 import { Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
@@ -67,12 +69,17 @@ export default async function HomePage() {
             <ButtonLink href="/portfolio" size="lg" variant="secondary">
               View my work
             </ButtonLink>
+            <ButtonLink href={site.whatsappChatHref} size="lg" variant="secondary" external>
+              Chat on WhatsApp
+            </ButtonLink>
           </div>
           <div className="mt-12 sm:mt-16">
             <HeartbeatTrace />
           </div>
         </Container>
       </section>
+
+      <TrustStrip />
 
       {/* Who I help */}
       <Section labelledBy="who-title">
@@ -99,16 +106,19 @@ export default async function HomePage() {
           title="What I build"
           intro="Each service comes with a written scope, a timeline and a price before any work begins."
         />
-        <ul className="mt-12 grid gap-x-14 md:grid-cols-2">
+        <ul className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
-            <li key={s.slug} className="border-t border-line py-6">
-              <h3 className="text-xl">
+            <li key={s.slug} className="flex flex-col rounded-2xl border border-line bg-paper p-6 transition-shadow hover:shadow-md">
+              <span className="inline-flex h-11 w-11 items-center justify-center rounded-xl bg-teal/10 text-teal">
+                <ServiceIcon slug={s.slug} />
+              </span>
+              <h3 className="mt-4 text-xl">
                 <Link href={`/services/${s.slug}`} className="hover:text-teal">
                   {s.title}
                 </Link>
               </h3>
-              <p className="mt-2 text-muted">{s.summary}</p>
-              <p className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
+              <p className="mt-2 flex-1 text-muted">{s.summary}</p>
+              <p className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-1 text-sm">
                 <span className="text-ink-soft">{formatStartingPrice(s)}</span>
                 <Link
                   href={`/services/${s.slug}`}
