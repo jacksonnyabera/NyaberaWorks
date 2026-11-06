@@ -8,14 +8,19 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { StatusBadge, Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section } from "@/components/ui/Section";
+import type { Project } from "@/content/projects";
 import { getProject, getProjects } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl, site } from "@/lib/site";
 
 type Props = { params: Promise<{ slug: string }> };
 
+function categoryLabel(category: Project["category"]): string {
+  return category === "Biomedical" ? "Operations software" : category;
+}
+
 export async function generateStaticParams() {
-  return (await getProjects()).map((p) => ({ slug: p.slug }));
+  return (await getProjects()).map((project) => ({ slug: project.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,8 +39,7 @@ export default async function ProjectPage({ params }: Props) {
   const project = await getProject(slug);
   if (!project) notFound();
 
-  const others = (await getProjects()).filter((p) => p.slug !== project.slug).slice(0, 3);
-
+  const others = (await getProjects()).filter((item) => item.slug !== project.slug).slice(0, 3);
   const blocks: { title: string; body: string }[] = [
     { title: "The problem", body: project.problem },
     { title: "The solution", body: project.solution },
@@ -74,7 +78,7 @@ export default async function ProjectPage({ params }: Props) {
           </nav>
           <div className="mt-4 flex flex-wrap items-center gap-3">
             <StatusBadge status={project.status} />
-            <span className="text-sm text-muted">{project.category}</span>
+            <span className="text-sm text-muted">{categoryLabel(project.category)}</span>
           </div>
           <h1 className="mt-4 max-w-3xl text-4xl sm:text-5xl md:text-6xl">{project.title}</h1>
           <p className="mt-5 max-w-2xl text-lg text-muted sm:text-xl">{project.summary}</p>
@@ -93,24 +97,24 @@ export default async function ProjectPage({ params }: Props) {
 
         <div className="mx-auto mt-14 grid max-w-4xl gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
           <div className="space-y-12">
-            {blocks.map((b) => (
-              <div key={b.title}>
-                <h2 className="text-2xl sm:text-3xl">{b.title}</h2>
-                <p className="mt-4 max-w-prose text-lg">{b.body}</p>
+            {blocks.map((block) => (
+              <div key={block.title}>
+                <h2 className="text-2xl sm:text-3xl">{block.title}</h2>
+                <p className="mt-4 max-w-prose text-lg">{block.body}</p>
               </div>
             ))}
             <div>
-              <h2 className="text-2xl sm:text-3xl">Features</h2>
+              <h2 className="text-2xl sm:text-3xl">Features and capabilities</h2>
               <ul className="mt-4 divide-y divide-line border-y border-line">
-                {project.features.map((f) => (
-                  <li key={f} className="py-3.5 text-lg">
-                    {f}
+                {project.features.map((feature) => (
+                  <li key={feature} className="py-3.5 text-lg">
+                    {feature}
                   </li>
                 ))}
               </ul>
             </div>
             <div>
-              <h2 className="text-2xl sm:text-3xl">Result and status</h2>
+              <h2 className="text-2xl sm:text-3xl">Outcome and current status</h2>
               <p className="mt-4 max-w-prose text-lg">{project.result}</p>
               {project.caveat ? (
                 <p className="mt-4 max-w-prose rounded-card border border-line bg-panel p-4 text-[0.95rem]">
@@ -120,19 +124,24 @@ export default async function ProjectPage({ params }: Props) {
             </div>
           </div>
 
-          <aside aria-label="Project details" className="lg:sticky lg:top-24 lg:h-fit">
+          <aside aria-label="Project overview" className="lg:sticky lg:top-24 lg:h-fit">
             <div className="rounded-card border border-line bg-white p-6">
-              <h2 className="text-lg">Technology</h2>
+              <p className="text-xs font-bold uppercase tracking-[0.16em] text-muted">Project overview</p>
+              <div className="mt-4 flex flex-wrap items-center gap-2">
+                <StatusBadge status={project.status} />
+                <span className="text-sm text-muted">{categoryLabel(project.category)}</span>
+              </div>
+              <h2 className="mt-7 text-lg">Technology</h2>
               {project.technologies.length > 0 ? (
                 <ul className="mt-3 flex flex-wrap gap-2">
-                  {project.technologies.map((t) => (
-                    <Tag key={t}>{t}</Tag>
+                  {project.technologies.map((technology) => (
+                    <Tag key={technology}>{technology}</Tag>
                   ))}
                 </ul>
               ) : (
-                <p className="mt-3 text-muted">Technology details are not listed for this project.</p>
+                <p className="mt-3 text-sm text-muted">Technology details are not listed for this project.</p>
               )}
-              <div className="mt-6 flex flex-col gap-3">
+              <div className="mt-7 flex flex-col gap-3">
                 <ButtonLink href="/quote" size="lg">
                   Start a similar project
                 </ButtonLink>
@@ -152,14 +161,14 @@ export default async function ProjectPage({ params }: Props) {
           More work
         </h2>
         <ul className="mt-8 grid gap-8 md:grid-cols-3">
-          {others.map((p) => (
-            <li key={p.slug}>
+          {others.map((item) => (
+            <li key={item.slug}>
               <h3 className="text-xl">
-                <Link href={`/portfolio/${p.slug}`} className="hover:text-teal">
-                  {p.title}
+                <Link href={`/portfolio/${item.slug}`} className="hover:text-violet">
+                  {item.title}
                 </Link>
               </h3>
-              <p className="mt-2 text-muted">{p.summary}</p>
+              <p className="mt-2 text-muted">{item.summary}</p>
             </li>
           ))}
         </ul>
