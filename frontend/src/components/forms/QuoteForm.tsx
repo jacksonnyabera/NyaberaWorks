@@ -49,7 +49,7 @@ export function QuoteForm({ services }: { services: ServiceChoice[] }) {
           reset();
         }}
       >
-        <p>Thank you. I will review your request and reply with questions or a written quote, usually within two working days.</p>
+        <p>Thank you. NyaberaWorks will review your request and reply with any follow-up questions or a written quote, usually within two working days.</p>
         <p>There is no charge for a quote.</p>
       </SubmitSuccess>
     );

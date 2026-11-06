@@ -46,7 +46,7 @@ export function ContactForm({ services }: { services: ServiceChoice[] }) {
           reset();
         }}
       >
-        <p>Thank you. I will reply to the email address you gave, usually within one to two working days.</p>
+        <p>Thank you. NyaberaWorks will reply to the email address you provided, usually within one to two working days.</p>
       </SubmitSuccess>
     );
   }
