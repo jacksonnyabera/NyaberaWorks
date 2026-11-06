@@ -10,9 +10,9 @@ import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
 import { absoluteUrl } from "@/lib/site";
 
 export const metadata = pageMetadata({
-  title: "Services: web development, Python, automation and biomedical support",
+  title: "Software development, automation and data solutions",
   description:
-    "Custom websites, business web applications, Python backends and APIs, automation, data reporting, integrations, maintenance, biomedical engineering technical support and technical documentation.",
+    "Business websites, custom web applications, Python backends, API integrations, workflow automation, data reporting and ongoing maintenance.",
   path: "/services",
 });
 
@@ -40,7 +40,7 @@ export default async function ServicesPage() {
       />
       <PageHeader
         title="Services"
-        intro="Every service starts with a written scope, timeline and price. Pick the closest match, or describe your problem and I will tell you which fits."
+        intro="Every engagement starts with a clear scope, timeline and price. Explore the capabilities below or describe the challenge your business needs to solve."
       >
         <div className="flex flex-col gap-3 sm:flex-row">
           <ButtonLink href="/quote" size="lg">
@@ -58,7 +58,7 @@ export default async function ServicesPage() {
             <li key={s.slug} className="grid gap-4 py-8 md:grid-cols-[1.5fr_1fr_auto] md:items-start md:gap-10">
               <div>
                 <h2 className="text-2xl">
-                  <Link href={`/services/${s.slug}`} className="hover:text-teal">
+                  <Link href={`/services/${s.slug}`} className="hover:text-violet">
                     {s.title}
                   </Link>
                 </h2>
@@ -76,7 +76,7 @@ export default async function ServicesPage() {
               </dl>
               <Link
                 href={`/services/${s.slug}`}
-                className="font-semibold text-teal underline-offset-4 hover:underline md:self-center"
+                className="font-semibold text-violet underline-offset-4 hover:underline md:self-center"
               >
                 See details
               </Link>
@@ -85,7 +85,7 @@ export default async function ServicesPage() {
         </ul>
       </Section>
 
-      <CtaBand title="Not sure which service you need?" body="Describe the problem in a few sentences. I will tell you what fits, or say honestly if I am not the right person." />
+      <CtaBand title="Not sure which service you need?" body="Tell us what is slowing your business down. We will help identify a practical next step and the right solution." />
     </>
   );
 }
