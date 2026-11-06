@@ -174,9 +174,9 @@
   },
   {
     "slug": "biomedical-engineering-technical-support",
-    "title": "Biomedical Engineering Technical Support",
-    "summary": "Software and documentation support for equipment records, maintenance schedules and technical processes in healthcare settings.",
-    "description": "I combine my biomedical engineering studies with software skills to help clinics and facilities organise equipment inventories, track maintenance schedules and produce clear technical documentation and tools.",
+    "title": "Healthcare Operations Software Support",
+    "summary": "Practical software and reporting tools for equipment records, maintenance schedules and healthcare operations.",
+    "description": "Purpose-built software and reporting can help healthcare facilities organise equipment inventories, track maintenance schedules and keep operational documentation accessible.",
     "problem": "Equipment records live on paper or scattered spreadsheets, maintenance dates get missed, and there is no easy way to see what needs attention.",
     "deliverables": [
       "Equipment inventory and maintenance-tracking tools",
@@ -192,7 +192,7 @@
     ],
     "timeline": "2 to 8 weeks, depending on scope",
     "startingPriceKes": null,
-    "bestFor": "Small hospitals, clinics and laboratories that want better records and reporting.",
+    "bestFor": "Hospitals, clinics and laboratories that want clearer operational records and reporting.",
     "note": "This is technical and software support. It does not replace inspection, calibration or sign-off by licensed clinical or biomedical engineers where regulations require it.",
     "sortOrder": 80
   },

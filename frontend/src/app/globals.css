@@ -13,9 +13,13 @@
   --color-ink: #19182c;
   --color-ink-soft: #302d49;
   --color-muted: #625e75;
-  --color-teal: #4936a8;
-  --color-teal-deep: #30236f;
-  --color-teal-tint: #e5e0f6;
+  --color-violet: #4936a8;
+  --color-violet-deep: #30236f;
+  --color-violet-tint: #e5e0f6;
+  /* Legacy utility aliases retained while older components are migrated. */
+  --color-teal: var(--color-violet);
+  --color-teal-deep: var(--color-violet-deep);
+  --color-teal-tint: var(--color-violet-tint);
   --color-pulse: #8271e8;
   --color-mist: #d6d0e8;
   --color-danger: #a62b1f;

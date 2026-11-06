@@ -10,9 +10,9 @@ const base =
   "inline-flex items-center justify-center gap-2 rounded-full font-semibold transition-colors duration-150 disabled:cursor-not-allowed disabled:opacity-60 whitespace-nowrap";
 
 const variants: Record<Variant, string> = {
-  primary: "bg-teal text-white hover:bg-teal-deep",
+  primary: "bg-violet text-white hover:bg-violet-deep",
   secondary: "border border-ink/30 text-ink hover:border-ink hover:bg-ink hover:text-paper",
-  ghost: "text-teal hover:text-teal-deep underline-offset-4 hover:underline",
+  ghost: "text-violet hover:text-violet-deep underline-offset-4 hover:underline",
   inverse: "bg-paper text-ink hover:bg-white",
 };
 

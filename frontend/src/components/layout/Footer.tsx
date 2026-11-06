@@ -24,7 +24,7 @@ export async function Footer() {
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr_1fr_1.2fr]">
           <div>
             <Logo inverse />
-            <p className="mt-4 max-w-xs text-mist">{site.tagline}.</p>
+            <p className="mt-4 max-w-xs text-mist">{site.tagline}</p>
             <p className="mt-2 text-mist">{site.location}.</p>
           </div>
 

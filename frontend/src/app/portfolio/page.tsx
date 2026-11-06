@@ -10,7 +10,7 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Work: projects and case studies",
   description:
-    "Projects by Jackson Nyabera: NyumbaDirect, RemoteHub Kenya, a hospital equipment management prototype, data and automation work, and the NyaberaWorks platform.",
+    "Selected NyaberaWorks projects across business platforms, custom software, data tools and workflow automation.",
   path: "/portfolio",
 });
 
@@ -38,7 +38,7 @@ export default async function PortfolioPage() {
       />
       <PageHeader
         title="Work"
-        intro="Real projects, each with its status stated plainly: live, built, prototype or learning project. Every case study follows the same path: problem, solution, technology, features and result."
+        intro="Selected work with project status stated clearly. Each case study explains the challenge, solution, technologies and delivered capabilities."
       >
         <ButtonLink href="/quote" size="lg">
           Start a project
