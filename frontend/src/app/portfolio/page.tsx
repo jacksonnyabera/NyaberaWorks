@@ -1,5 +1,5 @@
 import { CtaBand } from "@/components/home/CtaBand";
-import { ProjectCard } from "@/components/portfolio/ProjectCard";
+import { PortfolioGrid } from "@/components/portfolio/PortfolioGrid";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { ButtonLink } from "@/components/ui/Button";
 import { PageHeader, Section } from "@/components/ui/Section";
@@ -10,23 +10,25 @@ import { absoluteUrl } from "@/lib/site";
 export const metadata = pageMetadata({
   title: "Work: projects and case studies",
   description:
-    "Selected NyaberaWorks projects across business platforms, custom software, data tools and workflow automation.",
+    "Explore NyaberaWorks projects across business platforms, custom software, data tools and workflow automation. See each project's status, capabilities and technology.",
   path: "/portfolio",
 });
 
 export default async function PortfolioPage() {
   const projects = await getProjects();
+  const liveProjects = projects.filter((project) => project.status === "Live").length;
+
   return (
     <>
       <JsonLd
         data={{
           "@context": "https://schema.org",
           "@type": "ItemList",
-          itemListElement: projects.map((p, i) => ({
+          itemListElement: projects.map((project, index) => ({
             "@type": "ListItem",
-            position: i + 1,
-            url: absoluteUrl(`/portfolio/${p.slug}`),
-            name: p.title,
+            position: index + 1,
+            url: absoluteUrl(`/portfolio/${project.slug}`),
+            name: project.title,
           })),
         }}
       />
@@ -37,25 +39,27 @@ export default async function PortfolioPage() {
         ])}
       />
       <PageHeader
-        title="Work"
-        intro="Selected work with project status stated clearly. Each case study explains the challenge, solution, technologies and delivered capabilities."
+        title="Work that solves real problems"
+        intro="Explore platforms, software and automation projects. Each entry states its current status and separates delivered capabilities from prototypes and work in progress."
       >
-        <ButtonLink href="/quote" size="lg">
-          Start a project
-        </ButtonLink>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+          <ButtonLink href="/quote" size="lg">
+            Start a project
+          </ButtonLink>
+          <p className="text-sm text-muted">
+            {projects.length} projects documented · {liveProjects} live
+          </p>
+        </div>
       </PageHeader>
 
       <Section>
-        <ul className="grid gap-x-10 gap-y-14 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((p) => (
-            <li key={p.slug}>
-              <ProjectCard project={p} />
-            </li>
-          ))}
-        </ul>
+        <PortfolioGrid projects={projects} />
       </Section>
 
-      <CtaBand title="Want something like this built for you?" />
+      <CtaBand
+        title="Have a problem worth solving?"
+        body="Tell us what your team needs to improve. We will help shape a practical solution, scope and next step."
+      />
     </>
   );
 }
