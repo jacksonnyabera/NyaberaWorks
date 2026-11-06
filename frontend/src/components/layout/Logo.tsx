@@ -25,7 +25,7 @@ export function Logo({ inverse }: { inverse?: boolean }) {
     <Link href="/" className="inline-flex items-center gap-3" aria-label={`${site.name} home`}>
       <LogoMark />
       <span className={cn("font-display text-xl font-bold tracking-[-0.045em]", inverse ? "text-paper" : "text-ink")}>
-        Nyabera<span className="text-teal">Works</span>
+        Nyabera<span className="text-violet">Works</span>
       </span>
     </Link>
   );
