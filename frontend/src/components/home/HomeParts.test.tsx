@@ -6,11 +6,14 @@ import { TrustStrip } from "@/components/home/TrustStrip";
 import { services } from "@/content/services";
 
 describe("home parts", () => {
-  it("shows the at-a-glance facts", () => {
+  it("shows the company trust facts in a labelled region", () => {
     render(<TrustStrip />);
-    expect(screen.getByRole("region", { name: "At a glance" })).toBeInTheDocument();
+    expect(
+      screen.getByRole("region", { name: "Working with NyaberaWorks" }),
+    ).toBeInTheDocument();
     expect(screen.getByText("One to two working days")).toBeInTheDocument();
   });
+
   it("has an icon for every service and hides it from screen readers", () => {
     for (const s of services) {
       const { container, unmount } = render(<ServiceIcon slug={s.slug} />);
