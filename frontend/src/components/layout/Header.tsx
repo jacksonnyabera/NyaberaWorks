@@ -59,14 +59,14 @@ export function Header() {
               href={item.href}
               aria-current={isActive(pathname, item.href) ? "page" : undefined}
               className={cn(
-                "text-[0.95rem] font-medium underline-offset-[10px] transition-colors hover:text-teal",
-                isActive(pathname, item.href) ? "text-teal underline decoration-2" : "text-ink-soft",
+                "text-[0.95rem] font-medium underline-offset-[10px] transition-colors hover:text-violet",
+                isActive(pathname, item.href) ? "text-violet underline decoration-2" : "text-ink-soft",
               )}
             >
               {item.label}
             </Link>
           ))}
-          <AccountLinks linkClassName="text-[0.95rem] font-medium text-ink-soft transition-colors hover:text-teal" />
+          <AccountLinks linkClassName="text-[0.95rem] font-medium text-ink-soft transition-colors hover:text-violet" />
           <ButtonLink href="/quote">Start a project</ButtonLink>
         </nav>
 
@@ -94,7 +94,7 @@ export function Header() {
                 aria-current={isActive(pathname, item.href) ? "page" : undefined}
                 className={cn(
                   "border-b border-line py-4 font-display text-2xl font-semibold",
-                  isActive(pathname, item.href) ? "text-teal" : "text-ink",
+                  isActive(pathname, item.href) ? "text-violet" : "text-ink",
                 )}
               >
                 {item.label}
