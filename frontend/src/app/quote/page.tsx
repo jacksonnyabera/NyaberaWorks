@@ -38,8 +38,17 @@ export default async function QuotePage() {
               <li>You receive a written scope, timeline and price, usually within two working days.</li>
               <li>If you accept, we agree the next steps. Nothing starts before that.</li>
             </ol>
-            <p className="text-muted">
-              A rough budget helps us recommend the right approach. If you are not sure, choose &ldquo;Not sure yet&rdquo;.
+            <div className="rounded-card border border-line bg-panel p-5">
+              <h3 className="font-semibold">To help us prepare an accurate quote</h3>
+              <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-muted">
+                <li>Describe the business problem and who will use the solution.</li>
+                <li>List any essential features, tools or systems it must connect to.</li>
+                <li>Share a target launch date if you have one.</li>
+                <li>Choose an approximate budget, or select “Not sure yet”.</li>
+              </ul>
+            </div>
+            <p className="text-sm text-muted">
+              You do not need a technical specification. A clear description in everyday language is enough to start the conversation.
             </p>
           </aside>
         </div>
