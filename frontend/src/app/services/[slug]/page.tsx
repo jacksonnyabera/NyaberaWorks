@@ -7,6 +7,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section } from "@/components/ui/Section";
+import { processSteps } from "@/content/general";
 import { formatStartingPrice } from "@/content/services";
 import { getService, getServices } from "@/lib/catalog";
 import { breadcrumbJsonLd, pageMetadata } from "@/lib/seo";
@@ -122,6 +123,18 @@ export default async function ServiceDetailPage({ params }: Props) {
                 ))}
               </ul>
             </div>
+            <div>
+              <h2 className="text-2xl sm:text-3xl">How the engagement works</h2>
+              <ol className="mt-5 grid gap-4 sm:grid-cols-2">
+                {processSteps.map((step, index) => (
+                  <li key={step.title} className="rounded-card border border-line bg-panel p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.16em] text-violet">Step {index + 1}</p>
+                    <h3 className="mt-2 text-lg font-semibold">{step.title}</h3>
+                    <p className="mt-2 text-sm leading-6 text-muted">{step.body}</p>
+                  </li>
+                ))}
+              </ol>
+            </div>
             {service.note ? (
               <p className="max-w-prose rounded-card border border-line bg-panel p-4 text-[0.95rem]">
                 {service.note}
@@ -153,7 +166,7 @@ export default async function ServiceDetailPage({ params }: Props) {
                   Book this service
                 </ButtonLink>
               </div>
-              <p className="mt-4 text-sm text-muted">Quotes are free. Nothing starts until you agree to the scope and price.</p>
+              <p className="mt-4 text-sm text-muted">The quote is free and carries no obligation. Final pricing depends on the agreed scope, integrations and delivery requirements. Work starts only after you approve the written proposal.</p>
             </div>
           </aside>
         </div>
