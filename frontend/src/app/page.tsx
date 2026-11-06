@@ -5,10 +5,9 @@ import { FaqList } from "@/components/home/FaqList";
 import { ServiceIcon } from "@/components/home/ServiceIcon";
 import { TrustStrip } from "@/components/home/TrustStrip";
 import { ProjectPanel } from "@/components/portfolio/ProjectPanel";
-import { Tag } from "@/components/ui/Badge";
 import { ButtonLink } from "@/components/ui/Button";
 import { Container, Section, SectionHeading } from "@/components/ui/Section";
-import { processSteps, reasons, skillGroups } from "@/content/general";
+import { processSteps, reasons } from "@/content/general";
 import { formatStartingPrice } from "@/content/services";
 import { getProjects, getServices } from "@/lib/catalog";
 import { pageMetadata } from "@/lib/seo";
@@ -149,7 +148,7 @@ export default async function HomePage() {
               <span className="font-mono text-sm font-semibold text-[#8271e8]">{item.mark}</span>
               <h3 className="mt-8 text-2xl">{item.title}</h3>
               <p className="mt-3 text-muted">{item.body}</p>
-              <span className="mt-8 inline-flex text-sm font-semibold text-teal">Explore capability <span className="ml-2 transition-transform group-hover:translate-x-1" aria-hidden="true">→</span></span>
+              <p className="mt-8 border-t border-line pt-4 text-sm font-medium text-muted">Designed around your workflow</p>
             </article>
           ))}
         </div>
