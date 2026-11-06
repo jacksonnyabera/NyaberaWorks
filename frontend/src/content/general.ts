@@ -24,8 +24,8 @@ export const faqs: { q: string; a: string }[] = [
     a: "Often, yes. Share the details with your request and we will assess whether we can help and what an initial review would involve.",
   },
   {
-    q: "What does biomedical engineering support include?",
-    a: "Where relevant, we can build software tools and documentation for equipment records, maintenance schedules and reporting. This does not replace inspection, calibration or sign-off by licensed engineers where regulations require it.",
+    q: "What does healthcare operations software support include?",
+    a: "We can build software tools and reporting workflows for equipment inventories, maintenance schedules and operational records. These tools support administration and do not replace inspection, calibration or sign-off by qualified professionals where required.",
   },
   {
     q: "What happens after launch?",
