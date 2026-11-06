@@ -5,25 +5,26 @@ import { site } from "@/lib/site";
 
 export function LogoMark({ className }: { className?: string }) {
   return (
-    <svg viewBox="0 0 32 32" className={cn("h-8 w-8", className)} aria-hidden="true">
-      <rect width="32" height="32" rx="7" fill="#0a6f6a" />
+    <svg viewBox="0 0 40 40" className={cn("h-9 w-9 shrink-0", className)} role="img" aria-label="NyaberaWorks mark">
+      <rect x="1" y="1" width="38" height="38" rx="12" fill="#4936a8" />
       <path
-        d="M4 18h6l3-9 5 15 3-6h7"
+        d="M10 28V12l10 11V12m0 16 10-16v16"
         fill="none"
         stroke="#fff"
-        strokeWidth="2.4"
+        strokeWidth="3"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
+      <circle cx="30" cy="28" r="2" fill="#c9c0ff" />
     </svg>
   );
 }
 
 export function Logo({ inverse }: { inverse?: boolean }) {
   return (
-    <Link href="/" className="inline-flex items-center gap-2.5" aria-label={`${site.name} home`}>
+    <Link href="/" className="inline-flex items-center gap-3" aria-label={`${site.name} home`}>
       <LogoMark />
-      <span className={cn("font-display text-xl font-semibold tracking-tight", inverse ? "text-paper" : "text-ink")}>
+      <span className={cn("font-display text-xl font-bold tracking-[-0.045em]", inverse ? "text-paper" : "text-ink")}>
         Nyabera<span className="text-teal">Works</span>
       </span>
     </Link>
