@@ -6,6 +6,10 @@ import { cn } from "@/lib/cn";
 
 import { ProjectCover } from "./ProjectCover";
 
+function categoryLabel(category: Project["category"]): string {
+  return category === "Biomedical" ? "Operations software" : category;
+}
+
 export function ProjectPanel({ project, flip }: { project: Project; flip?: boolean }) {
   return (
     <article className="grid items-center gap-8 md:grid-cols-2 md:gap-14">
@@ -20,16 +24,16 @@ export function ProjectPanel({ project, flip }: { project: Project; flip?: boole
       <div>
         <div className="flex flex-wrap items-center gap-3">
           <StatusBadge status={project.status} />
-          <span className="text-sm text-muted">{project.category}</span>
+          <span className="text-sm text-muted">{categoryLabel(project.category)}</span>
         </div>
         <h3 className="mt-4 text-3xl sm:text-4xl">
-          <Link href={`/portfolio/${project.slug}`} className="hover:text-teal">
+          <Link href={`/portfolio/${project.slug}`} className="hover:text-violet">
             {project.title}
           </Link>
         </h3>
         <p className="mt-3 max-w-prose text-lg text-muted">{project.summary}</p>
         <div className="mt-6 flex flex-wrap items-center gap-x-6 gap-y-2">
-          <Link href={`/portfolio/${project.slug}`} className="font-semibold text-teal underline-offset-4 hover:underline">
+          <Link href={`/portfolio/${project.slug}`} className="font-semibold text-violet underline-offset-4 hover:underline">
             Read the case study
           </Link>
           {project.liveUrl ? (
