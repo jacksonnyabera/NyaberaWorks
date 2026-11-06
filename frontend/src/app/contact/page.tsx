@@ -8,7 +8,7 @@ import { site } from "@/lib/site";
 
 export const metadata = pageMetadata({
   title: "Contact",
-  description: "Send Jackson Nyabera a message about a website, application, automation or biomedical engineering project.",
+  description: "Contact NyaberaWorks about a business website, custom software, data reporting or workflow automation project.",
   path: "/contact",
 });
 
@@ -24,14 +24,14 @@ export default async function ContactPage() {
       />
       <PageHeader
         title="Contact"
-        intro="Ask a question or describe what you need. I reply to every message, usually within one to two working days."
+        intro="Ask a question or describe what your business needs. NyaberaWorks reviews every message and aims to respond within one to two working days."
       />
       <Section>
         <div className="grid gap-14 lg:grid-cols-[1.5fr_1fr] lg:gap-20">
           <FormBoundary>
             <ContactForm services={services} />
           </FormBoundary>
-          <aside aria-label="Other ways to reach me" className="space-y-8">
+          <aside aria-label="Other ways to reach NyaberaWorks" className="space-y-8">
             <div>
               <h2 className="text-xl">Prefer to write directly?</h2>
               <ul className="mt-4 space-y-3 text-lg">
@@ -64,7 +64,7 @@ export default async function ContactPage() {
             <div>
               <h2 className="text-xl">Need a price?</h2>
               <p className="mt-2 text-muted">
-                A quote request collects the details I need to give you a written scope, timeline and price.
+                A quote request gives our team the details needed to prepare a clear written scope, timeline and price.
               </p>
             </div>
           </aside>
