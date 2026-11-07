@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { AccountLinks } from "@/components/auth/AccountLink";
 import { ButtonLink } from "@/components/ui/Button";
@@ -18,26 +18,56 @@ function isActive(pathname: string, href: string) {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
-  const [openFor, setOpenFor] = useState(pathname);
+  const [menuPathname, setMenuPathname] = useState(pathname);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Close the mobile menu after navigating to another page.
-  if (openFor !== pathname) {
-    setOpenFor(pathname);
-    setOpen(false);
+  // Reset menu state when the route changes, without scheduling state from an effect.
+  if (menuPathname !== pathname) {
+    setMenuPathname(pathname);
+    if (open) setOpen(false);
   }
 
-  // Escape closes the menu; the page behind it does not scroll while it is open.
+  // Keep keyboard focus inside the open mobile menu and return it to the trigger.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
+    const menu = menuRef.current;
+    const focusable = () =>
+      Array.from(
+        menu?.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+        ) ?? [],
+      ).filter((element) => element.offsetParent !== null);
+    const first = focusable()[0];
+    first?.focus();
+
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        return;
+      }
+      if (event.key !== "Tab") return;
+      const items = focusable();
+      if (!items.length) return;
+      const firstItem = items[0];
+      const lastItem = items[items.length - 1];
+      if (event.shiftKey && document.activeElement === firstItem) {
+        event.preventDefault();
+        lastItem.focus();
+      } else if (!event.shiftKey && document.activeElement === lastItem) {
+        event.preventDefault();
+        firstItem.focus();
+      }
     };
+
     document.addEventListener("keydown", onKey);
     const previous = document.body.style.overflow;
+    const trigger = triggerRef.current;
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = previous;
+      trigger?.focus();
     };
   }, [open]);
 
@@ -71,6 +101,7 @@ export function Header() {
         </nav>
 
         <button
+          ref={triggerRef}
           type="button"
           className="inline-flex h-11 w-11 items-center justify-center rounded-md border border-line md:hidden"
           aria-expanded={open}
@@ -85,7 +116,14 @@ export function Header() {
       </div>
 
       {open ? (
-        <div id="mobile-menu" className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-paper md:hidden">
+        <div
+          ref={menuRef}
+          id="mobile-menu"
+          role="dialog"
+          aria-modal="true"
+          aria-label="Mobile navigation"
+          className="fixed inset-x-0 top-16 bottom-0 overflow-y-auto bg-paper md:hidden"
+        >
           <nav aria-label="Mobile" className="mx-auto flex max-w-6xl flex-col px-5 py-6 sm:px-8">
             {mainNav.map((item) => (
               <Link
