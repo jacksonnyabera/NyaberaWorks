@@ -18,13 +18,15 @@ function isActive(pathname: string, href: string) {
 export function Header() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [menuPathname, setMenuPathname] = useState(pathname);
   const menuRef = useRef<HTMLDivElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
-  // Close the mobile menu after navigating to another page.
-  useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
+  // Reset menu state when the route changes, without scheduling state from an effect.
+  if (menuPathname !== pathname) {
+    setMenuPathname(pathname);
+    if (open) setOpen(false);
+  }
 
   // Keep keyboard focus inside the open mobile menu and return it to the trigger.
   useEffect(() => {
@@ -60,11 +62,12 @@ export function Header() {
 
     document.addEventListener("keydown", onKey);
     const previous = document.body.style.overflow;
+    const trigger = triggerRef.current;
     document.body.style.overflow = "hidden";
     return () => {
       document.removeEventListener("keydown", onKey);
       document.body.style.overflow = previous;
-      triggerRef.current?.focus();
+      trigger?.focus();
     };
   }, [open]);
 
